@@ -1,0 +1,94 @@
+body{
+    padding: 20px;
+}
+
+textarea{
+    height: 100px;
+    width: 600px;
+    resize: none;
+}
+
+label{
+    display: inline-block;
+    width: 120px;
+    vertical-align: top;
+}
+
+select, input{
+    padding: 3px;
+    margin: 3px;
+}
+
+body > div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+div.edit-dialogue-div > div{
+    margin: 10px 0 10px 0;
+}
+
+div.edit-dialogue-div > div.conditions-actions-wrapper{
+    margin-left: 120px;
+}
+
+div.conditions-actions-wrapper > div{
+    display: inline-block;
+    padding-right: 40px;
+    vertical-align: top;
+}
+
+div.actions-wrapper > label{
+    width: 50px;
+}
+
+div.conditions-wrapper > div, div.actions-wrapper > div{
+    display: inline-block;
+}
+
+div.conditions-wrapper .new-condition-value{
+    width: 40px;
+    text-align: center;
+}
+
+div.conditions-wrapper .conditions-list, div.actions-wrapper .actions-list{
+    margin: 10px 0 0 0;
+    background-color: #eee;
+    border: black 1px solid;
+    min-height: 200px;
+    padding: 5px;
+}
+
+div.conditions-list div.condition-row > span, div.actions-list div.action-row > span{
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+div.conditions-list div.condition-row > span.condition-name, div.actions-list div.action-row > span.action-name{
+    width: 100px;
+}
+
+div.conditions-list div.condition-row > span.condition-operation{
+    width: 50px;
+}
+
+div.conditions-list div.condition-row > span.condition-value{
+    width: 30px;
+}
+
+div.dialogue-tree-wrapper{
+    padding: 10px;
+}
+
+div.dialogue-tree div.dialogue-item{
+    margin-bottom: 10px;
+}
+
+div.dialogue-item div.subdialogues{
+    margin-left: 15px;
+}
+
+.hidden{
+    display: none;
+}

@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="./js/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+</head>
+
+<body>
+    <div class="edit-dialogue-div">
+        <span>edit dialogue</span>
+        <input class="save-dialogue" type="button" value="save"/>
+        <input class="add-subdialogue" type="button" value="add subdialogue"/>
+        <div><label>id</label><input class="dialogue-id" type="text" placeholder="e.g. john-smith-1"/></div>
+        <div><label>dialogue text</label><textarea class="dialogue-option" placeholder="e.g. What do you have to sell ?"></textarea></div>
+        <div><label>response</label><textarea class="dialogue-response" placeholder="e.g. I have plenty of weapons. Just take a look."></textarea></div>
+        <div class="conditions-actions-wrapper">
+            <div class="conditions-wrapper">
+                <h3>conditions</h3>
+                <div>
+                    <select class="new-condition-name">
+                        <option>charisma</option>
+                    </select>
+                    <select class="new-condition-operand">
+                        <option>></option>
+                    </select>
+                    <input type="text" class="new-condition-value" value="0"/>
+                    <input type="button" class="add-condition-action" value="add"/>
+                    <div class="conditions-list">
+                    </div>
+                </div>
+            </div>
+            <div class="actions-wrapper">
+                <h3>actions</h3>
+                <div>
+                    <select class="new-action-name">
+                        <option>end-conversation</option>
+                    </select>
+                    <input type="button" class="add-new-action" value="add"/>
+                    <div class="actions-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dialogue-tree-wrapper">
+        <div class="file-loader">
+                <input type="file">
+        </div>
+        <div class="dialogue-tree">
+        </div>
+    </div>
+</body>
+
+</html>
