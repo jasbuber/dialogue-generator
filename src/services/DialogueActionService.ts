@@ -10,7 +10,7 @@ export class DialogueActionService {
 
     private actionsListElement: HTMLDivElement;
 
-    private actions: Array<HTMLDivElement> = new Array<HTMLDivElement>();
+    private actionsElements: Array<HTMLDivElement> = new Array<HTMLDivElement>();
 
     constructor() {
         this.actionsElement = <HTMLDivElement>document.getElementsByClassName("actions-wrapper")[0];
@@ -37,12 +37,22 @@ export class DialogueActionService {
 
         this.actionsListElement.appendChild(newAction.getActionElement());
 
-        this.actions.push(newAction.getActionElement());
+        this.actionsElements.push(newAction.getActionElement());
     }
 
     private clearActions() {
-        this.actions.forEach((action) => action.remove());
-        this.actions = new Array<HTMLDivElement>();
+        this.actionsElements.forEach((action) => action.remove());
+        this.actionsElements = new Array<HTMLDivElement>();
+    }
+
+    public getActions(): Array<string> {
+        let actions = new Array<string>();
+        this.actionsElements.forEach((action) => { 
+            let actionName = <HTMLSpanElement> action.firstChild;
+            actions.push( actionName.innerText ); }
+        );
+
+        return actions;
     }
 
 }

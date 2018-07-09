@@ -20,6 +20,8 @@ export class EditDialogueView {
 
     private dialogueConditionService = new DialogueConditionService();
 
+    private dialogueItem: DialogueItem;
+
     constructor() {
 
         this.editView = <HTMLDivElement>document.getElementsByClassName("edit-dialogue-div")[0];
@@ -36,15 +38,16 @@ export class EditDialogueView {
     }
 
     public getId() {
-        return this.idElement.innerText;
+        return this.idElement.value;
     }
 
     public getOption() {
-        return this.optionElement.innerText;
+        console.log(this.optionElement.value);
+        return this.optionElement.value;
     }
 
     public getResponse() {
-        return this.responseElement.innerText;
+        return this.responseElement.value;
     }
 
     private setId(id: string) {
@@ -52,11 +55,11 @@ export class EditDialogueView {
     }
 
     private setOption(option: string) {
-        this.optionElement.innerText = option;
+        this.optionElement.value = option;
     }
 
     private setResponse(response: string) {
-        this.responseElement.innerText = response;
+        this.responseElement.value = response;
     }
 
     public getSaveElement(): HTMLInputElement {
@@ -68,11 +71,33 @@ export class EditDialogueView {
     }
 
     public setDialogueItem(dialogueItem: DialogueItem) {
+
+        this.dialogueItem = dialogueItem;
         this.setId(dialogueItem.getId());
         this.setOption(dialogueItem.getOption());
         this.setResponse(dialogueItem.getResponse());
         this.dialogueConditionService.setConditions(dialogueItem.getConditions());
         this.dialogueActionService.setActions(dialogueItem.getActions());
+    }
+
+    public getDialogueItem() {
+        return this.dialogueItem;
+    }
+
+    private getActions(): Array<string> {
+        return this.dialogueActionService.getActions();
+    }
+
+    private getConditions(): Array<string> {
+        return this.dialogueConditionService.getConditions();
+    }
+
+    public updateItem(){
+        this.dialogueItem.setId(this.getId());
+        this.dialogueItem.setDialogue(this.getOption());
+        this.dialogueItem.setResponse(this.getResponse());
+        this.dialogueItem.setConditions(this.getConditions());
+        this.dialogueItem.setActions(this.getActions());
     }
 
 }

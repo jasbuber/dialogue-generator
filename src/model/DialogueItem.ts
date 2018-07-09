@@ -14,6 +14,8 @@ export class DialogueItem {
 
     private subdialoguesElement: HTMLSpanElement;
 
+    private subdialogues: Array<DialogueItem> = new Array<DialogueItem>();
+
     constructor(jsonItem: DialogueTree) {
         this.jsonItem = jsonItem;
         this.buildShallow();
@@ -39,6 +41,8 @@ export class DialogueItem {
         dialogueItem.appendChild(this.subdialoguesElement);
 
         this.documentItem = dialogueItem;
+
+        this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub)));
 
         return this.documentItem;
     }
@@ -75,8 +79,8 @@ export class DialogueItem {
         return this.subdialoguesElement;
     }
 
-    public getSubdialogues(): Array<DialogueTree> {
-        return this.jsonItem.subdialogues;
+    public getSubdialogues(): Array<DialogueItem> {
+        return this.subdialogues;
     }
 
     public isSubdialoguesVisible(): boolean {
@@ -91,24 +95,57 @@ export class DialogueItem {
         return this.documentItem;
     }
 
-    public getId(): string{
+    public getId(): string {
         return this.jsonItem.id;
     }
 
-    public getOption(): string{
+    public getOption(): string {
         return this.jsonItem.dialogue;
     }
 
-    public getResponse(): string{
+    public getResponse(): string {
         return this.jsonItem.response;
     }
 
-    public getActions(): Array<string>{
+    public getActions(): Array<string> {
         return this.jsonItem.actions;
     }
 
-    public getConditions(): Array<string>{
+    public getConditions(): Array<string> {
         return this.jsonItem.conditions;
+    }
+
+    public setActions(actions: Array<string>) {
+        this.jsonItem.actions = actions;
+    }
+
+    public setConditions(conditions: Array<string>) {
+        this.jsonItem.conditions = conditions;
+    }
+
+    public setId(id: string) {
+        this.jsonItem.id = id;
+    }
+
+    public setDialogue(dialogue: string) {
+        this.jsonItem.dialogue = dialogue;
+    }
+
+    public setResponse(response: string) {
+        this.jsonItem.response = response;
+    }
+
+    public toJson(): DialogueTree {
+        let children = new Array<DialogueTree>();
+        this.subdialogues.forEach((sub) => children.push(sub.toJson()));
+        return {
+            id: this.jsonItem.id,
+            dialogue: this.jsonItem.dialogue,
+            response: this.jsonItem.response,
+            subdialogues: children,
+            actions: this.jsonItem.actions,
+            conditions: this.jsonItem.conditions
+        }
     }
 
 }

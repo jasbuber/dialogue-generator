@@ -24,7 +24,11 @@ export class TreeEventManager {
 
             if (!item.isSubdialoguesVisible()) {
                 if (subdialoguesDiv.children.length == 0) {
-                    item.getSubdialogues().forEach((s) => subdialoguesDiv.appendChild(new DialogueItem(s).getDocumentItem()));
+                    item.getSubdialogues().forEach((s) => { 
+                        this.addExpandListener(s);
+                        this.addEditListener(s);
+                        subdialoguesDiv.appendChild(s.getDocumentItem());
+                    });
                 }
                 expandSpan.innerText = "-";
                 subdialoguesDiv.classList.remove("hidden")

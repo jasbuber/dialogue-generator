@@ -39,6 +39,16 @@ export class DialogueConditionService {
         conditions.forEach((condition) => this.addCondition(condition));
     }
 
+    public getConditions(): Array<string> {
+        let conditions = new Array<string>();
+        this.conditions.forEach((condition) => { 
+            let conditionName = <HTMLSpanElement> condition.firstChild;
+            conditions.push( conditionName.innerText ); }
+        );
+
+        return conditions;
+    }
+
     private addCondition(condition: string) {
 
         let newCondition = new ConditionItem(condition);

@@ -1,7 +1,6 @@
-import { DialogueTreeBuilder } from "./services/DialogueTreeBuilder";
-import { EditDialogueView } from "./model/EditDialogueView";
-import { DialogueActionService } from "./services/DialogueActionService";
-import { DialogueConditionService } from "./services/DialogueConditionService";
+import { FileService } from "./services/FileService";
+
+var fileService: FileService = new FileService();
 
 export function loadDialogueJson(e: any) {
 
@@ -11,22 +10,7 @@ export function loadDialogueJson(e: any) {
         return;
     }
 
-    var reader = new FileReader();
-    reader.addEventListener("load", function () {
-        let json = JSON.parse(reader.result);
-
-        let editView: EditDialogueView = new EditDialogueView();
-
-        let dialogueTreeBuilder = new DialogueTreeBuilder(json, editView);
-
-        let dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
-
-        dialogueTreeBuilder.getShallowTree().forEach(dialogue => {
-            dialogueTree.appendChild(dialogue);
-        });
-    }, false);
-
-    reader.readAsText(files[0]);
+    fileService.readJson(files[0]);
 }
 
 window.onload = function () {
