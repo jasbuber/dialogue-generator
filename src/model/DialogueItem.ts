@@ -83,6 +83,17 @@ export class DialogueItem {
         return this.subdialogues;
     }
 
+    public addSubdialogue(item: DialogueItem){
+        this.subdialogues.push(item);
+
+        if(this.expandElement.innerText == "+"){
+            this.expandElement.click();
+        }else if(this.expandElement.innerText == ""){
+            this.expandElement.innerText = "-";
+        }
+        this.subdialoguesElement.appendChild(item.getDocumentItem());
+    }
+
     public isSubdialoguesVisible(): boolean {
         return this.subdialoguesVisible;
     }
