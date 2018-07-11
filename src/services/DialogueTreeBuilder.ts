@@ -20,6 +20,7 @@ export class DialogueTreeBuilder {
         this.treeEventManager = new TreeEventManager(editView);
         this.editViewEventManager = new EditViewEventManager(editView);
         this.addExportListener();
+        this.addCreateListener();
     }
 
     public getShallowTree(): Array<HTMLDivElement> {
@@ -37,6 +38,26 @@ export class DialogueTreeBuilder {
     private addExportListener() {
         let exportAction = <HTMLInputElement>document.getElementsByClassName("export-action")[0];
         exportAction.addEventListener("click", () => new FileService().saveJson(this.rootDialogueItems), false);
+    }
+
+    private addCreateListener() {
+        let createAction = <HTMLInputElement>document.getElementsByClassName("create-dialogue-action")[0];
+        createAction.addEventListener("click", () => {
+            let newDialogueTree: DialogueTree = {
+                id: "new-dialogue-id",
+                dialogue: "new-dialogue",
+                response: "",
+                subdialogues: new Array<DialogueTree>(),
+                actions: new Array<string>(),
+                conditions: new Array<string>()
+            }
+            let dialogueItem = new DialogueItem(newDialogueTree, true);
+            this.rootDialogueItems.push(dialogueItem);
+            this.treeEventManager.addListeners(dialogueItem);
+
+            let dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
+            dialogueTree.appendChild(dialogueItem.getDocumentItem());
+        }, false);
     }
 
 }
