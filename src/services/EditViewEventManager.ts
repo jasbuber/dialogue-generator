@@ -42,8 +42,10 @@ export class EditViewEventManager {
 
         addSubdialogueAction.addEventListener("click", () => {
             let dialogueItem = this.editView.getDialogueItem();
+            let parentId: string = dialogueItem.getId();
+            let childId = parentId + "-" + ( dialogueItem.getSubdialogues().length + 1 );
             let newDialogueTree: DialogueTree = {
-                id: "new-id",
+                id: childId,
                 dialogue: "new-dialogue",
                 response: "",
                 subdialogues: new Array<DialogueTree>(),
