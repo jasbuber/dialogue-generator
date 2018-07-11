@@ -16,6 +16,8 @@ export class DialogueItem {
 
     private subdialogues: Array<DialogueItem> = new Array<DialogueItem>();
 
+    private removed: boolean = false;
+
     constructor(jsonItem: DialogueTree) {
         this.jsonItem = jsonItem;
         this.buildShallow();
@@ -148,7 +150,7 @@ export class DialogueItem {
 
     public toJson(): DialogueTree {
         let children = new Array<DialogueTree>();
-        this.subdialogues.forEach((sub) => children.push(sub.toJson()));
+        this.subdialogues.filter((item) => !item.isRemoved()).forEach((sub) => children.push(sub.toJson()));
         return {
             id: this.jsonItem.id,
             dialogue: this.jsonItem.dialogue,
@@ -157,6 +159,15 @@ export class DialogueItem {
             actions: this.jsonItem.actions,
             conditions: this.jsonItem.conditions
         }
+    }
+
+    public remove(){
+        this.removed = true;
+        this.getDocumentItem().remove();
+    }
+
+    public isRemoved(): boolean{
+        return this.removed;
     }
 
 }

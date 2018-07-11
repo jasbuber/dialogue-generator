@@ -13,6 +13,7 @@ export class EditViewEventManager {
         this.editView = editView;
         this.addSaveListener();
         this.addNewSubdialogueListener();
+        this.addRemoveListener();
         this.treeEventManager = new TreeEventManager(this.editView);
     }
 
@@ -22,6 +23,16 @@ export class EditViewEventManager {
 
         saveAction.addEventListener("click", () => {
             this.editView.updateItem();
+        }, false);
+    }
+
+    private addRemoveListener(): void {
+
+        let saveAction: HTMLSpanElement = this.editView.getRemoveElement();
+
+        saveAction.addEventListener("click", () => {
+            let dialogueItem = this.editView.getDialogueItem();
+            dialogueItem.remove();
         }, false);
     }
 

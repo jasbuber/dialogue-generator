@@ -26,7 +26,11 @@ export class FileService {
     public saveJson(dialogueItems: Array<DialogueItem>) {
         let jsonParts = new Array<string>();
 
-        dialogueItems.forEach((item) => jsonParts.push(JSON.stringify(item.toJson())));
+        dialogueItems.filter((item) => !item.isRemoved()).forEach((item) => {
+        jsonParts.push(JSON.stringify(item.toJson()));
+        console.log(item);
+        }
+    );
         var file = new Blob(jsonParts);
 
         var link = document.createElement('a');

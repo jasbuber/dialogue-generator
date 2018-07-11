@@ -8,6 +8,8 @@ export class EditDialogueView {
 
     private saveElement: HTMLInputElement;
 
+    private removeElement: HTMLInputElement;
+
     private addElement: HTMLInputElement;
 
     private idElement: HTMLInputElement;
@@ -27,6 +29,8 @@ export class EditDialogueView {
         this.editView = <HTMLDivElement>document.getElementsByClassName("edit-dialogue-div")[0];
 
         this.saveElement = <HTMLInputElement>this.editView.getElementsByClassName("save-dialogue")[0];
+
+        this.removeElement = <HTMLInputElement>this.editView.getElementsByClassName("remove-dialogue")[0];
 
         this.addElement = <HTMLInputElement>this.editView.getElementsByClassName("add-subdialogue")[0];
 
@@ -70,6 +74,10 @@ export class EditDialogueView {
         return this.addElement;
     }
 
+    public getRemoveElement(): HTMLInputElement {
+        return this.removeElement;
+    }
+
     public setDialogueItem(dialogueItem: DialogueItem) {
 
         this.dialogueItem = dialogueItem;
@@ -92,7 +100,7 @@ export class EditDialogueView {
         return this.dialogueConditionService.getConditions();
     }
 
-    public updateItem(){
+    public updateItem() {
         this.dialogueItem.setId(this.getId());
         this.dialogueItem.setDialogue(this.getOption());
         this.dialogueItem.setResponse(this.getResponse());
