@@ -25,7 +25,7 @@ export class DialogueTreeBuilder {
     public getShallowTree(): Array<HTMLDivElement> {
         let result: Array<HTMLDivElement> = [];
         for (var i = 0; i < this.dialogueObject.length; i++) {
-            let dialogueItem = new DialogueItem(this.dialogueObject[i]);
+            let dialogueItem = new DialogueItem(this.dialogueObject[i], true);
             this.rootDialogueItems.push(dialogueItem);
             this.treeEventManager.addListeners(dialogueItem);
             result.push(dialogueItem.getDocumentItem());

@@ -18,14 +18,19 @@ export class DialogueItem {
 
     private removed: boolean = false;
 
-    constructor(jsonItem: DialogueTree) {
+    constructor(jsonItem: DialogueTree, isRoot: boolean) {
         this.jsonItem = jsonItem;
-        this.buildShallow();
+        this.buildShallow(isRoot);
     }
 
-    private buildShallow(): HTMLDivElement {
+    private buildShallow(isRoot: boolean): HTMLDivElement {
         this.expandElement = this.buildExpandSpan();
-        this.nameElement = this.buildSpan("dialogue-name", this.jsonItem.id);
+
+        let name = this.jsonItem.dialogue.slice(0, 30);
+        if(isRoot){
+            name = this.jsonItem.id;
+        }
+        this.nameElement = this.buildSpan("dialogue-name", name);
 
         let dialogueInfo: HTMLDivElement = document.createElement("div");
         dialogueInfo.classList.add("dialogue-info");
@@ -44,7 +49,7 @@ export class DialogueItem {
 
         this.documentItem = dialogueItem;
 
-        this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub)));
+        this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub, false)));
 
         return this.documentItem;
     }

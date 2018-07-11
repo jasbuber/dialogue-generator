@@ -44,14 +44,14 @@ export class EditViewEventManager {
             let dialogueItem = this.editView.getDialogueItem();
             let newDialogueTree: DialogueTree = {
                 id: "new-id",
-                dialogue: "",
+                dialogue: "new-dialogue",
                 response: "",
                 subdialogues: new Array<DialogueTree>(),
                 actions: new Array<string>(),
                 conditions: new Array<string>()
             }
 
-            let newItem = new DialogueItem(newDialogueTree);
+            let newItem = new DialogueItem(newDialogueTree, false);
             dialogueItem.addSubdialogue(newItem);
 
             this.treeEventManager.addListeners(newItem);
