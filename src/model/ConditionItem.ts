@@ -4,7 +4,7 @@ export class ConditionItem {
 
     private nameElement: HTMLSpanElement;
 
-    private removeAction: HTMLButtonElement;
+    private removeAction: HTMLAnchorElement;
 
     private condition: string;
 
@@ -13,8 +13,10 @@ export class ConditionItem {
 
         this.nameElement = document.createElement("span");
         this.nameElement.innerText = condition;
-        this.removeAction = document.createElement("button");
-        this.removeAction.innerText = "remove";
+        this.nameElement.classList.add("label");
+        this.removeAction = document.createElement("a");
+        this.removeAction.classList.add("delete");
+        this.removeAction.classList.add("is-medium");
 
         this.conditionElement = document.createElement("div");
         this.conditionElement.classList.add("condition-row");
@@ -22,7 +24,7 @@ export class ConditionItem {
         this.conditionElement.appendChild(this.removeAction);
     }
 
-    public getRemoveAction(): HTMLButtonElement{
+    public getRemoveAction(): HTMLAnchorElement{
         return this.removeAction;
     }
 

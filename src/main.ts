@@ -12,6 +12,8 @@ export function loadDialogueJson(e: any) {
         return;
     }
 
+    (<HTMLSpanElement>document.getElementsByClassName("file-name")[0]).innerText = files[0].name;
+    
     fileService.readJson(files[0]);
 }
 

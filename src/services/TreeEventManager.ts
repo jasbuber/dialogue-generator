@@ -48,7 +48,15 @@ export class TreeEventManager {
 
         nameSpan.addEventListener("click", (e) => {
 
+            let dialogueItem = this.editView.getDialogueItem();
+            if (dialogueItem != null) {
+                let dialogueInfo = dialogueItem.getDocumentItem().getElementsByClassName("dialogue-info")[0];
+                dialogueInfo.classList.remove("is-primary");
+                dialogueInfo.classList.remove("button");
+            }
             this.editView.setDialogueItem(item);
+            item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("is-primary");
+            item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("button");
 
         }, false);
     }

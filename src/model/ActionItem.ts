@@ -4,7 +4,7 @@ export class ActionItem {
 
     private nameElement: HTMLSpanElement;
 
-    private removeAction: HTMLButtonElement;
+    private removeAction: HTMLAnchorElement;
 
     private action: string;
 
@@ -13,8 +13,10 @@ export class ActionItem {
 
         this.nameElement = document.createElement("span");
         this.nameElement.innerText = action;
-        this.removeAction = document.createElement("button");
-        this.removeAction.innerText = "remove";
+        this.nameElement.classList.add("label");
+        this.removeAction = document.createElement("a");
+        this.removeAction.classList.add("delete");
+        this.removeAction.classList.add("is-medium");
 
         this.actionElement = document.createElement("div");
         this.actionElement.classList.add("action-row");
@@ -22,7 +24,7 @@ export class ActionItem {
         this.actionElement.appendChild(this.removeAction);
     }
 
-    public getRemoveAction(): HTMLButtonElement{
+    public getRemoveAction(): HTMLAnchorElement{
         return this.removeAction;
     }
 
