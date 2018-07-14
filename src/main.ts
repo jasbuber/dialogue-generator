@@ -1,8 +1,12 @@
 import { FileService } from "./services/FileService";
+import { EditDialogueView } from "./model/EditDialogueView";
+import { DialogueTreeBuilder } from "./services/DialogueTreeBuilder";
 import actions from "./resources/actions.json";
 import conditions from "./resources/conditions.json";
 
 var fileService: FileService = new FileService();
+
+var dialogueTreeBuilder: DialogueTreeBuilder;
 
 export function loadDialogueJson(e: any) {
 
@@ -13,8 +17,8 @@ export function loadDialogueJson(e: any) {
     }
 
     (<HTMLSpanElement>document.getElementsByClassName("file-name")[0]).innerText = files[0].name;
-    
-    fileService.readJson(files[0]);
+
+    fileService.readJson(files[0], dialogueTreeBuilder);
 }
 
 window.onload = function () {
@@ -35,6 +39,7 @@ window.onload = function () {
         option.text = condition;
         newConditionName.add(option);
     });
-    
+
+    dialogueTreeBuilder = new DialogueTreeBuilder(new EditDialogueView());
 }
 

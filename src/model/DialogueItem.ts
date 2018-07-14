@@ -27,7 +27,7 @@ export class DialogueItem {
         this.expandElement = this.buildExpandSpan();
 
         let name = this.jsonItem.dialogue.slice(0, 30);
-        if(isRoot){
+        if (isRoot) {
             name = this.jsonItem.id;
         }
         this.nameElement = this.buildSpan("dialogue-name", name);
@@ -153,9 +153,9 @@ export class DialogueItem {
         this.jsonItem.response = response;
     }
 
-    public toJson(): DialogueTree {
-        let children = new Array<DialogueTree>();
-        this.subdialogues.filter((item) => !item.isRemoved()).forEach((sub) => children.push(sub.toJson()));
+    public toJSON(key: any) {
+        let children = new Array<DialogueItem>();
+        this.subdialogues.filter((item) => !item.isRemoved()).forEach((sub) => children.push(sub));
         return {
             id: this.jsonItem.id,
             dialogue: this.jsonItem.dialogue,
@@ -166,12 +166,12 @@ export class DialogueItem {
         }
     }
 
-    public remove(){
+    public remove() {
         this.removed = true;
         this.getDocumentItem().remove();
     }
 
-    public isRemoved(): boolean{
+    public isRemoved(): boolean {
         return this.removed;
     }
 

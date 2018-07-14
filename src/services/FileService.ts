@@ -1,21 +1,19 @@
 import { DialogueTreeBuilder } from "./DialogueTreeBuilder";
-import { EditDialogueView } from "../model/EditDialogueView";
 import { DialogueItem } from "../model/DialogueItem";
 
 export class FileService {
 
-    public readJson(blob: Blob) {
+    public readJson(blob: Blob, dialogueTreeBuilder: DialogueTreeBuilder) {
         var reader = new FileReader();
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", () => {
             let json = JSON.parse(reader.result);
-
-            let editView: EditDialogueView = new EditDialogueView();
-
-            let dialogueTreeBuilder = new DialogueTreeBuilder(json, editView);
 
             let dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
 
-            dialogueTreeBuilder.getShallowTree().forEach(dialogue => {
+            while (dialogueTree.firstChild) {
+                dialogueTree.removeChild(dialogueTree.firstChild);
+            }
+            dialogueTreeBuilder.getShallowTree(json).forEach(dialogue => {
                 dialogueTree.appendChild(dialogue);
             });
         }, false);
@@ -24,14 +22,7 @@ export class FileService {
     }
 
     public saveJson(dialogueItems: Array<DialogueItem>) {
-        let jsonParts = new Array<string>();
-
-        dialogueItems.filter((item) => !item.isRemoved()).forEach((item) => {
-        jsonParts.push(JSON.stringify(item.toJson()));
-        console.log(item);
-        }
-    );
-        var file = new Blob(jsonParts);
+        var file = new Blob([JSON.stringify(dialogueItems)]);
 
         var link = document.createElement('a');
         link.download = "dialogues.json";

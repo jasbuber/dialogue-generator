@@ -7,26 +7,24 @@ import { FileService } from "./FileService";
 
 export class DialogueTreeBuilder {
 
-    private dialogueObject: Array<DialogueTree>;
-
     private treeEventManager: TreeEventManager;
 
     private editViewEventManager: EditViewEventManager;
 
     private rootDialogueItems = new Array<DialogueItem>();
 
-    constructor(json: Array<DialogueTree>, editView: EditDialogueView) {
-        this.dialogueObject = json;
+    constructor(editView: EditDialogueView) {
         this.treeEventManager = new TreeEventManager(editView);
         this.editViewEventManager = new EditViewEventManager(editView);
         this.addExportListener();
         this.addCreateListener();
     }
 
-    public getShallowTree(): Array<HTMLDivElement> {
+    public getShallowTree(dialogueObject: Array<DialogueTree>): Array<HTMLDivElement> {
         let result: Array<HTMLDivElement> = [];
-        for (var i = 0; i < this.dialogueObject.length; i++) {
-            let dialogueItem = new DialogueItem(this.dialogueObject[i], true);
+        this.rootDialogueItems = new Array<DialogueItem>();
+        for (var i = 0; i < dialogueObject.length; i++) {
+            let dialogueItem = new DialogueItem(dialogueObject[i], true);
             this.rootDialogueItems.push(dialogueItem);
             this.treeEventManager.addListeners(dialogueItem);
             result.push(dialogueItem.getDocumentItem());
