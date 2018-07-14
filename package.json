@@ -7,7 +7,7 @@
     "install": "^0.10.1",
     "nodemon": "^1.12.1",
     "ts-node": "^3.3.0",
-    "typescript": "^2.5.3"
+    "typescript": "^2.9.2"
   },
   "scripts": {
     "start": "concurrently \"tsc -w\" \"http-server -c-1\" \"watchify js/main.js -s module -o js/bundle.js\""
