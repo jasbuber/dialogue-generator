@@ -18,7 +18,10 @@ export class DialogueItem {
 
     private removed: boolean = false;
 
+    private isDialogueRoot: boolean;
+
     constructor(jsonItem: DialogueTree, isRoot: boolean) {
+        this.isDialogueRoot = isRoot;
         this.jsonItem = jsonItem;
         this.buildShallow(isRoot);
     }
@@ -143,10 +146,18 @@ export class DialogueItem {
 
     public setId(id: string) {
         this.jsonItem.id = id;
+
+        if (this.isDialogueRoot) {
+            this.nameElement.innerText = id;
+        }
     }
 
     public setDialogue(dialogue: string) {
         this.jsonItem.dialogue = dialogue;
+
+        if (!this.isDialogueRoot) {
+            this.nameElement.innerText = dialogue.slice(0, 30);
+        }
     }
 
     public setResponse(response: string) {

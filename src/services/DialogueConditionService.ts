@@ -1,4 +1,5 @@
 import { ConditionItem } from "../model/ConditionItem";
+import { EditDialogueView } from "../model/EditDialogueView";
 
 export class DialogueConditionService {
 
@@ -14,9 +15,10 @@ export class DialogueConditionService {
 
     private conditionsListElement: HTMLDivElement;
 
-    private conditions: Array<HTMLDivElement> = new Array<HTMLDivElement>();
+    private editDialogueView: EditDialogueView;
 
-    constructor() {
+    constructor(editDialogueView: EditDialogueView) {
+        this.editDialogueView = editDialogueView;
         this.conditionsElement = <HTMLDivElement>document.getElementsByClassName("conditions-wrapper")[0];
         this.newConditionName = <HTMLSelectElement>this.conditionsElement.getElementsByClassName("new-condition-name")[0];
         this.newConditionOperand = <HTMLSelectElement>this.conditionsElement.getElementsByClassName("new-condition-operand")[0];
@@ -31,6 +33,7 @@ export class DialogueConditionService {
 
             let condition = conditionName.concat(" ").concat(conditionOperand).concat(" ").concat(conditionValue);
             this.addCondition(condition);
+            this.editDialogueView.updateItem();
         }, false);
     }
 
@@ -40,29 +43,34 @@ export class DialogueConditionService {
     }
 
     public getConditions(): Array<string> {
-        let conditions = new Array<string>();
-        this.conditions.forEach((condition) => { 
-            let conditionName = <HTMLSpanElement> condition.firstChild;
-            conditions.push( conditionName.innerText ); }
-        );
 
-        return conditions;
+        let conditionValues = new Array<string>();
+        let conditions = this.conditionsListElement.children;
+
+        for(let i = 0; i < conditions.length; i++){
+            let conditionName = <HTMLSpanElement> conditions[i].firstChild;
+            conditionValues.push( conditionName.innerText );
+        }
+
+        return conditionValues;
     }
 
     private addCondition(condition: string) {
 
         let newCondition = new ConditionItem(condition);
 
-        newCondition.getRemoveAction().addEventListener("click", () => newCondition.getConditionElement().remove(), false);
+        newCondition.getRemoveAction().addEventListener("click", () => { 
+            newCondition.getConditionElement().remove();
+            this.editDialogueView.updateItem();
+        }, false);
 
         this.conditionsListElement.appendChild(newCondition.getConditionElement());
-
-        this.conditions.push(newCondition.getConditionElement());
     }
 
     private clearConditions() {
-        this.conditions.forEach((condition) => condition.remove());
-        this.conditions = new Array<HTMLDivElement>();
+        while(this.conditionsListElement.firstChild){
+            this.conditionsListElement.removeChild(this.conditionsListElement.firstChild);
+        }
     }
 
 }

@@ -100,6 +100,7 @@ div.dialogue-tree div.dialogue-item{
 
 div.dialogue-tree div.dialogue-item .dialogue-info{
     height: 30px;
+    padding-left: 0;
 }
 
 div.dialogue-tree div.dialogue-item .expand-tree{

@@ -11,26 +11,17 @@ export class EditViewEventManager {
 
     constructor(editView: EditDialogueView) {
         this.editView = editView;
-        this.addSaveListener();
         this.addNewSubdialogueListener();
         this.addRemoveListener();
+        this.addChangedListener();
         this.treeEventManager = new TreeEventManager(this.editView);
-    }
-
-    private addSaveListener(): void {
-
-        let saveAction: HTMLSpanElement = this.editView.getSaveElement();
-
-        saveAction.addEventListener("click", () => {
-            this.editView.updateItem();
-        }, false);
     }
 
     private addRemoveListener(): void {
 
-        let saveAction: HTMLSpanElement = this.editView.getRemoveElement();
+        let removeAction: HTMLSpanElement = this.editView.getRemoveElement();
 
-        saveAction.addEventListener("click", () => {
+        removeAction.addEventListener("click", () => {
             let dialogueItem = this.editView.getDialogueItem();
             dialogueItem.remove();
         }, false);
@@ -43,7 +34,7 @@ export class EditViewEventManager {
         addSubdialogueAction.addEventListener("click", () => {
             let dialogueItem = this.editView.getDialogueItem();
             let parentId: string = dialogueItem.getId();
-            let childId = parentId + "-" + ( dialogueItem.getSubdialogues().length + 1 );
+            let childId = parentId + "-" + (dialogueItem.getSubdialogues().length + 1);
             let newDialogueTree: DialogueTree = {
                 id: childId,
                 dialogue: "new-dialogue",
@@ -58,6 +49,12 @@ export class EditViewEventManager {
 
             this.treeEventManager.addListeners(newItem);
         }, false);
+    }
+
+    private addChangedListener() {
+        this.editView.getOptionElement().addEventListener("change", () => this.editView.updateItem(), false);
+        this.editView.getIdElement().addEventListener("change", () => this.editView.updateItem(), false);
+        this.editView.getResponseElement().addEventListener("change", () => this.editView.updateItem(), false);
     }
 
 }

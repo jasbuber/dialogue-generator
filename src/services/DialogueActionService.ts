@@ -1,4 +1,5 @@
 import { ActionItem } from "../model/ActionItem";
+import { EditDialogueView } from "../model/EditDialogueView";
 
 export class DialogueActionService {
 
@@ -10,9 +11,10 @@ export class DialogueActionService {
 
     private actionsListElement: HTMLDivElement;
 
-    private actionsElements: Array<HTMLDivElement> = new Array<HTMLDivElement>();
+    private editDialogueView: EditDialogueView;
 
-    constructor() {
+    constructor(editDialogueView: EditDialogueView) {
+        this.editDialogueView = editDialogueView;
         this.actionsElement = <HTMLDivElement>document.getElementsByClassName("actions-wrapper")[0];
         this.newActionName = <HTMLSelectElement>this.actionsElement.getElementsByClassName("new-action-name")[0];
         this.newActionAction = <HTMLButtonElement>this.actionsElement.getElementsByClassName("add-new-action")[0];
@@ -21,6 +23,7 @@ export class DialogueActionService {
         this.newActionAction.addEventListener("click", () => {
             let actionValue = this.newActionName.selectedOptions[0].value;
             this.addAction(actionValue);
+            this.editDialogueView.updateItem();
         }, false);
     }
 
@@ -33,24 +36,29 @@ export class DialogueActionService {
 
         let newAction = new ActionItem(action);
 
-        newAction.getRemoveAction().addEventListener("click", () => newAction.getActionElement().remove(), false);
+        newAction.getRemoveAction().addEventListener("click", () => { 
+            newAction.getActionElement().remove();
+            this.editDialogueView.updateItem();
+        }, false);
 
         this.actionsListElement.appendChild(newAction.getActionElement());
-
-        this.actionsElements.push(newAction.getActionElement());
     }
 
     private clearActions() {
-        this.actionsElements.forEach((action) => action.remove());
-        this.actionsElements = new Array<HTMLDivElement>();
+        while(this.actionsListElement.firstChild){
+            this.actionsListElement.removeChild(this.actionsListElement.firstChild);
+        }
     }
 
     public getActions(): Array<string> {
         let actions = new Array<string>();
-        this.actionsElements.forEach((action) => { 
-            let actionName = <HTMLSpanElement> action.firstChild;
-            actions.push( actionName.innerText ); }
-        );
+
+        let actionElements = this.actionsListElement.children;
+
+        for(let i = 0; i < actionElements.length; i++){
+            let actionName = <HTMLSpanElement> actionElements[i].firstChild;
+            actions.push( actionName.innerText );
+        }
 
         return actions;
     }

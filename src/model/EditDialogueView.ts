@@ -6,8 +6,6 @@ export class EditDialogueView {
 
     private editView: HTMLDivElement;
 
-    private saveElement: HTMLInputElement;
-
     private removeElement: HTMLInputElement;
 
     private addElement: HTMLInputElement;
@@ -18,17 +16,15 @@ export class EditDialogueView {
 
     private responseElement: HTMLTextAreaElement;
 
-    private dialogueActionService = new DialogueActionService();
+    private dialogueActionService = new DialogueActionService(this);
 
-    private dialogueConditionService = new DialogueConditionService();
+    private dialogueConditionService = new DialogueConditionService(this);
 
     private dialogueItem: DialogueItem;
 
     constructor() {
 
         this.editView = <HTMLDivElement>document.getElementsByClassName("edit-dialogue-div")[0];
-
-        this.saveElement = <HTMLInputElement>this.editView.getElementsByClassName("save-dialogue")[0];
 
         this.removeElement = <HTMLInputElement>this.editView.getElementsByClassName("remove-dialogue")[0];
 
@@ -46,7 +42,6 @@ export class EditDialogueView {
     }
 
     public getOption() {
-        console.log(this.optionElement.value);
         return this.optionElement.value;
     }
 
@@ -66,16 +61,24 @@ export class EditDialogueView {
         this.responseElement.value = response;
     }
 
-    public getSaveElement(): HTMLInputElement {
-        return this.saveElement;
-    }
-
     public getAddElement(): HTMLInputElement {
         return this.addElement;
     }
 
     public getRemoveElement(): HTMLInputElement {
         return this.removeElement;
+    }
+
+    public getOptionElement(): HTMLTextAreaElement {
+        return this.optionElement;
+    }
+
+    public getIdElement(): HTMLInputElement {
+        return this.idElement;
+    }
+
+    public getResponseElement(): HTMLTextAreaElement {
+        return this.responseElement;
     }
 
     public setDialogueItem(dialogueItem: DialogueItem) {
