@@ -1,5 +1,6 @@
-import { ConditionItem } from "../model/ConditionItem";
-import { EditDialogueView } from "../model/EditDialogueView";
+import { ConditionItem } from "./ConditionItem";
+import { EditDialogueView } from "../edit_view/EditDialogueView";
+import conditions from "./resources/conditions.json";
 
 export class DialogueConditionService {
 
@@ -35,6 +36,12 @@ export class DialogueConditionService {
             this.addCondition(condition);
             this.editDialogueView.updateItem();
         }, false);
+
+        conditions.values.forEach((condition) => {
+            let option = <HTMLOptionElement>document.createElement("option");
+            option.text = condition;
+            this.newConditionName.add(option);
+        });
     }
 
     public setConditions(conditions: Array<string>) {

@@ -1,9 +1,9 @@
 import { DialogueTree } from "./DialogueTree";
-import { DialogueItem } from "../model/DialogueItem";
+import { DialogueItem } from "./DialogueItem";
 import { TreeEventManager } from "./TreeEventManager";
-import { EditViewEventManager } from "./EditViewEventManager";
-import { EditDialogueView } from "../model/EditDialogueView";
-import { FileService } from "./FileService";
+import { EditViewEventManager } from "../edit_view/EditViewEventManager";
+import { EditDialogueView } from "../edit_view/EditDialogueView";
+import { FileService } from "../io/FileService";
 
 export class DialogueTreeBuilder {
 

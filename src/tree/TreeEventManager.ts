@@ -1,5 +1,5 @@
-import { DialogueItem } from "../model/DialogueItem";
-import { EditDialogueView } from "../model/EditDialogueView";
+import { DialogueItem } from "./DialogueItem";
+import { EditDialogueView } from "../edit_view/EditDialogueView";
 
 export class TreeEventManager {
 

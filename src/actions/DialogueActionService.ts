@@ -1,5 +1,6 @@
-import { ActionItem } from "../model/ActionItem";
-import { EditDialogueView } from "../model/EditDialogueView";
+import { ActionItem } from "./ActionItem";
+import { EditDialogueView } from "../edit_view/EditDialogueView";
+import actions from "./resources/actions.json";
 
 export class DialogueActionService {
 
@@ -25,6 +26,12 @@ export class DialogueActionService {
             this.addAction(actionValue);
             this.editDialogueView.updateItem();
         }, false);
+
+        actions.values.forEach((action) => {
+            let option = <HTMLOptionElement>document.createElement("option");
+            option.text = action;
+            this.newActionName.add(option);
+        });
     }
 
     public setActions(actions: Array<string>) {

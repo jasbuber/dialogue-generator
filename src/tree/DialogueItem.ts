@@ -1,4 +1,4 @@
-import { DialogueTree } from "../services/DialogueTree"
+import { DialogueTree } from "./DialogueTree"
 
 export class DialogueItem {
 

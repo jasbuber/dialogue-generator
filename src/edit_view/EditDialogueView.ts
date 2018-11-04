@@ -1,6 +1,6 @@
-import { DialogueItem } from "../model/DialogueItem";
-import { DialogueActionService } from "../services/DialogueActionService";
-import { DialogueConditionService } from "../services/DialogueConditionService";
+import { DialogueItem } from "../tree/DialogueItem";
+import { DialogueActionService } from "../actions/DialogueActionService";
+import { DialogueConditionService } from "../conditions/DialogueConditionService";
 
 export class EditDialogueView {
 

@@ -1,5 +1,5 @@
-import { DialogueTreeBuilder } from "./DialogueTreeBuilder";
-import { DialogueItem } from "../model/DialogueItem";
+import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
+import { DialogueItem } from "../tree/DialogueItem";
 
 export class FileService {
 
