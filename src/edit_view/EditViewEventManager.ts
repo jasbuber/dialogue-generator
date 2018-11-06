@@ -19,16 +19,16 @@ export class EditViewEventManager {
 
     private addRemoveListener(): void {
 
-        let removeAction: HTMLSpanElement = this.editView.getRemoveElement();
+        /*let removeAction: HTMLSpanElement = this.editView.getRemoveElement();
 
         removeAction.addEventListener("click", () => {
             let dialogueItem = this.editView.getDialogueItem();
             dialogueItem.remove();
-        }, false);
+        }, false);*/
     }
 
     private addNewSubdialogueListener(): void {
-
+/*
         let addSubdialogueAction: HTMLSpanElement = this.editView.getAddElement();
 
         addSubdialogueAction.addEventListener("click", () => {
@@ -48,13 +48,13 @@ export class EditViewEventManager {
             dialogueItem.addSubdialogue(newItem);
 
             this.treeEventManager.addListeners(newItem);
-        }, false);
+        }, false);*/
     }
 
-    private addChangedListener() {
+    private addChangedListener() {/*
         this.editView.getOptionElement().addEventListener("change", () => this.editView.updateItem(), false);
         this.editView.getIdElement().addEventListener("change", () => this.editView.updateItem(), false);
-        this.editView.getResponseElement().addEventListener("change", () => this.editView.updateItem(), false);
+        this.editView.getResponseElement().addEventListener("change", () => this.editView.updateItem(), false);*/
     }
 
 }

@@ -7,8 +7,48 @@
 </head>
 
 <body>
-    <div class="edit-dialogue-div">
-        <h1 class="title">edit dialogue</h1>
+    <div class="dialogue-management-div">
+        <div class="file-loader-wrapper inline-block">
+            <div class="file-loader field">
+                <div class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume">
+                        <span class="file-cta">
+                            <span class="file-label">Choose a file…</span>
+                        </span>
+                        <span class="file-name"></span>
+                    </label>
+                </div>
+            </div>
+            <input class="export-action button is-success" type="button" value="export" />
+        </div>
+        <div class="npc-dialogue">
+            <div class="field">
+                <div class="control">
+                    <div class="select"><select class="npcs-list"></select></div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="create-new-dialogue button is-link">New</button>
+                </div>
+            </div>
+            <div>
+                <div class="field">
+                    <label class="label">Npc ID:</label>
+                    <div class="control">
+                        <input type="text" class="npc-id input" value="" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label wide">Greeting:</label>
+                    <div class="control">
+                        <textarea rows="3" cols="5" class="npc-greeting textarea" value=""></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<h1 class="title">edit dialogue</h1>
         <input class="remove-dialogue button" type="button" value="remove"/>
         <input class="add-subdialogue button" type="button" value="add subdialogue"/>
         <div class="dialogue-id-wrapper"><label class="label">id</label><input class="dialogue-id input" type="text" placeholder="e.g. john-smith-1"/></div>
@@ -34,31 +74,12 @@
                     <div class="actions-list"></div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
-    <div class="dialogue-tree-wrapper">
-        <div class="file-loader">
-            <div class="file has-name">
-                <label class="file-label">
-                  <input class="file-input" type="file" name="resume">
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                    </span>
-                    <span class="file-label">
-                      Choose a file…
-                    </span>
-                  </span>
-                  <span class="file-name">
-                  </span>
-                </label>
-              </div>
-            <input class="create-dialogue-action button" type="button" value="create"/>
-            <input class="export-action button" type="button" value="export as json"/>
-        </div>
-        <div class="dialogue-tree">
-        </div>
+    <div class="dialogue-tree">
+
     </div>
+
 </body>
 
 </html>

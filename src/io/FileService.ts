@@ -1,21 +1,17 @@
 import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { DialogueItem } from "../tree/DialogueItem";
+import { DialogueManager } from "../dialogue_management/DialogueManager";
+import { DialogueTree } from "../tree/DialogueTree";
 
 export class FileService {
 
-    public readJson(blob: Blob, dialogueTreeBuilder: DialogueTreeBuilder) {
+    public readJson(blob: Blob, dialogueManager: DialogueManager) {
         var reader = new FileReader();
         reader.addEventListener("load", () => {
+
             let json = JSON.parse(reader.result);
+            dialogueManager.initialize(json);
 
-            let dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
-
-            while (dialogueTree.firstChild) {
-                dialogueTree.removeChild(dialogueTree.firstChild);
-            }
-            dialogueTreeBuilder.getShallowTree(json).forEach(dialogue => {
-                dialogueTree.appendChild(dialogue);
-            });
         }, false);
 
         reader.readAsText(blob);

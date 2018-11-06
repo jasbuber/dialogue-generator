@@ -15,6 +15,7 @@ export class DialogueActionService {
     private editDialogueView: EditDialogueView;
 
     constructor(editDialogueView: EditDialogueView) {
+        /*
         this.editDialogueView = editDialogueView;
         this.actionsElement = <HTMLDivElement>document.getElementsByClassName("actions-wrapper")[0];
         this.newActionName = <HTMLSelectElement>this.actionsElement.getElementsByClassName("new-action-name")[0];
@@ -31,7 +32,7 @@ export class DialogueActionService {
             let option = <HTMLOptionElement>document.createElement("option");
             option.text = action;
             this.newActionName.add(option);
-        });
+        });*/
     }
 
     public setActions(actions: Array<string>) {

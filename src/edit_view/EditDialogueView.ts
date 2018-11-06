@@ -24,6 +24,7 @@ export class EditDialogueView {
 
     constructor() {
 
+        /*
         this.editView = <HTMLDivElement>document.getElementsByClassName("edit-dialogue-div")[0];
 
         this.removeElement = <HTMLInputElement>this.editView.getElementsByClassName("remove-dialogue")[0];
@@ -34,9 +35,10 @@ export class EditDialogueView {
 
         this.optionElement = <HTMLTextAreaElement>this.editView.getElementsByClassName("dialogue-option")[0];
 
-        this.responseElement = <HTMLTextAreaElement>this.editView.getElementsByClassName("dialogue-response")[0];
+        this.responseElement = <HTMLTextAreaElement>this.editView.getElementsByClassName("dialogue-response")[0];*/
     }
 
+    /*
     public getId() {
         return this.idElement.value;
     }
@@ -80,15 +82,15 @@ export class EditDialogueView {
     public getResponseElement(): HTMLTextAreaElement {
         return this.responseElement;
     }
-
+*/
     public setDialogueItem(dialogueItem: DialogueItem) {
 
         this.dialogueItem = dialogueItem;
-        this.setId(dialogueItem.getId());
-        this.setOption(dialogueItem.getOption());
-        this.setResponse(dialogueItem.getResponse());
-        this.dialogueConditionService.setConditions(dialogueItem.getConditions());
-        this.dialogueActionService.setActions(dialogueItem.getActions());
+        //this.setId(dialogueItem.getId());
+        //this.setOption(dialogueItem.getOption());
+        //this.setResponse(dialogueItem.getResponse());
+        //this.dialogueConditionService.setConditions(dialogueItem.getConditions());
+        //this.dialogueActionService.setActions(dialogueItem.getActions());
     }
 
     public getDialogueItem() {
@@ -104,11 +106,11 @@ export class EditDialogueView {
     }
 
     public updateItem() {
-        this.dialogueItem.setId(this.getId());
-        this.dialogueItem.setDialogue(this.getOption());
-        this.dialogueItem.setResponse(this.getResponse());
-        this.dialogueItem.setConditions(this.getConditions());
-        this.dialogueItem.setActions(this.getActions());
+        //this.dialogueItem.setId(this.getId());
+        //this.dialogueItem.setDialogue(this.getOption());
+        //this.dialogueItem.setResponse(this.getResponse());
+        //this.dialogueItem.setConditions(this.getConditions());
+        //this.dialogueItem.setActions(this.getActions());
     }
 
 }

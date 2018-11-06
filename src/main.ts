@@ -1,10 +1,9 @@
 import { FileService } from "./io/FileService";
-import { EditDialogueView } from "./edit_view/EditDialogueView";
-import { DialogueTreeBuilder } from "./tree/DialogueTreeBuilder";
+import { DialogueManager } from "./dialogue_management/DialogueManager";
 
-var fileService: FileService = new FileService();
+var fileService: FileService;
 
-var dialogueTreeBuilder: DialogueTreeBuilder;
+var dialogueManager: DialogueManager;
 
 export function loadDialogueJson(e: any) {
 
@@ -16,13 +15,14 @@ export function loadDialogueJson(e: any) {
 
     (<HTMLSpanElement>document.getElementsByClassName("file-name")[0]).innerText = files[0].name;
 
-    fileService.readJson(files[0], dialogueTreeBuilder);
+    fileService.readJson(files[0], dialogueManager);
 }
 
 window.onload = function () {
     var input = <HTMLInputElement>document.querySelector("input[type=file]");
     input.addEventListener("change", loadDialogueJson, false);
 
-    dialogueTreeBuilder = new DialogueTreeBuilder(new EditDialogueView());
+    fileService = new FileService();
+    dialogueManager = new DialogueManager();
 }
 

@@ -19,6 +19,7 @@ export class DialogueConditionService {
     private editDialogueView: EditDialogueView;
 
     constructor(editDialogueView: EditDialogueView) {
+        /*
         this.editDialogueView = editDialogueView;
         this.conditionsElement = <HTMLDivElement>document.getElementsByClassName("conditions-wrapper")[0];
         this.newConditionName = <HTMLSelectElement>this.conditionsElement.getElementsByClassName("new-condition-name")[0];
@@ -41,7 +42,7 @@ export class DialogueConditionService {
             let option = <HTMLOptionElement>document.createElement("option");
             option.text = condition;
             this.newConditionName.add(option);
-        });
+        });*/
     }
 
     public setConditions(conditions: Array<string>) {

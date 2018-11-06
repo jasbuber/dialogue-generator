@@ -1,120 +1,49 @@
-body{
+body {
     padding: 20px 0 0 50px;
 }
 
-textarea{
-    height: 100px;
-    width: 600px;
+.textarea {
     resize: none;
+    padding: 5px 10px;
 }
 
-label{
+label {
     display: inline-block;
     vertical-align: top;
 }
 
-select, input{
-    padding: 3px;
-    margin: 3px;
-}
-
-body > div{
-    display: inline-block;
+body>div {
     vertical-align: top;
 }
 
-div.edit-dialogue-div > div{
-    margin: 10px 0 10px 0;
-}
-
-div.edit-dialogue-div div.dialogue-id-wrapper{
-    width: 200px;
-}
-
-div.edit-dialogue-div div.conditions-actions-wrapper{
-    min-width: 700px;
-    margin: 20px 20px 20px 0px;
-}
-
-div.edit-dialogue-div div.conditions-actions-wrapper > div{
-    margin-right: 20px;
-    min-height: 250px;
-}
-
-div.conditions-actions-wrapper > div{
-    display: inline-block;
-    padding: 15px 30px 15px 30px;
-    vertical-align: top;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
-    color: #4a4a4a;
-}
-
-div.actions-wrapper > label{
-    width: 50px;
-}
-
-
-div.conditions-wrapper > div, div.actions-wrapper > div{
-    display: inline-block;
-}
-
-div.conditions-wrapper .new-condition-value{
-    width: 40px;
-    text-align: center;
-}
-/*
-div.conditions-wrapper .conditions-list, div.actions-wrapper .actions-list{
-    margin: 10px 0 0 0;
-    background-color: #eee;
-    border: black 1px solid;
-    min-height: 200px;
-    padding: 5px;
-}*/
-
-div.conditions-list, div.actions-list{
-    padding: 20px 0 0 10px;
-}
-
-div.conditions-list div.condition-row > span, div.actions-list div.action-row > span{
-    vertical-align: middle;
-    display: inline-block;
-    margin-right: 25px;
-}
-
-div.dialogue-tree-wrapper{
-    padding: 10px;
-}
-
-div.dialogue-tree{
-    margin: 20px 0 0 20px;
-    max-height: 800px;
-    min-width: 500px;
-    overflow-y: scroll;
-}
-
-div.dialogue-tree div.dialogue-item{
-    margin-bottom: 10px;
-}
-
-div.dialogue-tree div.dialogue-item .dialogue-info{
-    height: 30px;
-    padding-left: 0;
-}
-
-div.dialogue-tree div.dialogue-item .expand-tree{
-    width: 25px;
-    font-size: 20px;
-    font-weight: 500;
-    display: inline-block;
-    cursor: pointer;
-}
-
-div.dialogue-item div.subdialogues{
-    margin-left: 25px;
-}
-
-.hidden{
+.hidden {
     display: none;
+}
+
+.input {
+    min-width: 220px;
+}
+
+.wide {
+    min-width: 350px;
+}
+
+.file-loader-wrapper {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.file-name {
+    min-width: 150px;
+}
+
+.dialogue-management-div .field {
+    vertical-align: top;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.npc-dialogue {
+    margin-left: 160px;
+    display: inline-block;
 }
