@@ -71,6 +71,8 @@ export class DialogueItem {
 
         if (this.jsonItem.subdialogues.length > 0) {
             this.expandTreeElement.classList.add("icon-list2");
+        }else{
+            this.expandTreeElement.classList.add("hidden");
         }
 
         actionsDiv.appendChild(this.expandTreeElement);
