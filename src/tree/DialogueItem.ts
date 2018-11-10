@@ -8,9 +8,13 @@ export class DialogueItem {
 
     private documentItem: HTMLDivElement;
 
-    private expandElement: HTMLSpanElement;
+    private actionsElement: HTMLDivElement;
 
     private nameElement: HTMLSpanElement;
+
+    private addSubdialogueElement: HTMLDivElement;
+
+    private expandTreeElement: HTMLDivElement;
 
     private subdialoguesElement: HTMLSpanElement;
 
@@ -27,7 +31,7 @@ export class DialogueItem {
     }
 
     private buildShallow(isRoot: boolean): HTMLDivElement {
-        this.expandElement = this.buildExpandSpan();
+        this.actionsElement = this.buildActionsDiv();
 
         let name = this.jsonItem.dialogue.slice(0, 30);
         if (isRoot) {
@@ -37,7 +41,7 @@ export class DialogueItem {
 
         let dialogueInfo: HTMLDivElement = document.createElement("div");
         dialogueInfo.classList.add("dialogue-info");
-        dialogueInfo.appendChild(this.expandElement);
+        dialogueInfo.appendChild(this.actionsElement);
         dialogueInfo.appendChild(this.nameElement);
 
         let dialogueItem: HTMLDivElement = document.createElement("div");
@@ -57,16 +61,21 @@ export class DialogueItem {
         return this.documentItem;
     }
 
-    private buildExpandSpan(): HTMLSpanElement {
-
-        let className = "expand-tree";
-        let expandSpan = this.buildSpan(className, "");
+    private buildActionsDiv(): HTMLDivElement {
+        let actionsDiv: HTMLDivElement = document.createElement("div");
+        this.expandTreeElement = document.createElement("div");
+        this.addSubdialogueElement = document.createElement("div");
+        actionsDiv.classList.add("item-actions");
+        this.expandTreeElement.classList.add("expand-tree");
+        this.addSubdialogueElement.classList.add("icon-plus");
 
         if (this.jsonItem.subdialogues.length > 0) {
-            expandSpan.innerText = "+";
+            this.expandTreeElement.classList.add("icon-list2");
         }
 
-        return expandSpan;
+        actionsDiv.appendChild(this.expandTreeElement);
+        actionsDiv.appendChild(this.addSubdialogueElement);
+        return actionsDiv;
     }
 
     private buildSpan(className: string, text: string): HTMLSpanElement {
@@ -78,7 +87,7 @@ export class DialogueItem {
     }
 
     public getExpandElement(): HTMLSpanElement {
-        return this.expandElement;
+        return this.expandTreeElement
     }
 
     public getNameElement(): HTMLSpanElement {
@@ -96,10 +105,10 @@ export class DialogueItem {
     public addSubdialogue(item: DialogueItem) {
         this.subdialogues.push(item);
 
-        if (this.expandElement.innerText == "+") {
-            this.expandElement.click();
-        } else if (this.expandElement.innerText == "") {
-            this.expandElement.innerText = "-";
+        if (this.actionsElement.innerText == "+") {
+            this.actionsElement.click();
+        } else if (this.actionsElement.innerText == "") {
+            this.actionsElement.innerText = "-";
         }
         this.subdialoguesElement.appendChild(item.getDocumentItem());
     }

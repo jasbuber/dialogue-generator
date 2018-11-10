@@ -30,12 +30,14 @@ export class TreeEventManager {
                         subdialoguesDiv.appendChild(s.getDocumentItem());
                     });
                 }
-                expandSpan.innerText = "-";
+                expandSpan.classList.remove("icon-list2");
+                expandSpan.classList.add("icon-shrink2");
                 subdialoguesDiv.classList.remove("hidden")
                 item.setSubdialoguesVisible(true);
             } else {
                 subdialoguesDiv.classList.add("hidden");
-                expandSpan.innerText = "+";
+                expandSpan.classList.add("icon-list2");
+                expandSpan.classList.remove("icon-shrink2");
                 item.setSubdialoguesVisible(false);
             }
 

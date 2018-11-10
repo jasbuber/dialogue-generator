@@ -17,7 +17,7 @@ body>div {
 }
 
 .hidden {
-    display: none;
+    display: none!important;
 }
 
 .input {
@@ -31,6 +31,14 @@ body>div {
 
 .modal{
     text-align: center;
+}
+
+.item-actions{
+    position: absolute;
+    top: -10px;
+    right: -30px;
+    vertical-align: top;
+    cursor: pointer;
 }
 
 .file-loader-wrapper {
@@ -59,23 +67,27 @@ body>div {
 }
 
 .dialogue-tree{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .dialogue-item{
-    padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: left;
     flex-direction: row;
 }
 
-.dialogue-item .dialogue-info{
+.dialogue-item .dialogue-info {
+    position: relative;
     display: inline-block;
     border: 1px solid grey;
     width: 250px;
     padding: 2px;
-    margin: 2px 10px;
+    margin: 20px;
+}
+
+.dialogue-item .dialogue-info .item-actions > div{
+    padding-bottom: 15px;
 }
 
 .dialogue-item .subdialogues{
