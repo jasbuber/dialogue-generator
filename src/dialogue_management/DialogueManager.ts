@@ -46,6 +46,7 @@ export class DialogueManager {
         this.npcIdInput.value = dialogue.getId();
         this.npcGreetingInput.value = dialogue.getResponse();
         this.dialogueTreeBuilder.buildShallowTree(dialogue);
+        this.selectedDialogue = dialogue;
     }
 
     private fillDialogueList(dialogueTrees: Array<DialogueTree>) {
