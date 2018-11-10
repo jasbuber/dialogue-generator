@@ -16,6 +16,8 @@ export class DialogueManager {
 
     private dialogueTreeBuilder: DialogueTreeBuilder = new DialogueTreeBuilder(new EditDialogueView());
 
+    private deleteConfirmationModal: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName("delete-dialogue-confirmation")[0];
+
     private selectedDialogue: DialogueItem;
 
     constructor() {
@@ -23,6 +25,7 @@ export class DialogueManager {
         this.addCreateDialogueListener();
         this.addIdChangedListener();
         this.addGreetingChangedListener();
+        this.addDeleteDialogueListener();
     }
 
     public initialize(dialogueTrees: Array<DialogueTree>): void {
@@ -34,11 +37,15 @@ export class DialogueManager {
 
         this.dialogueSelectElement.addEventListener("change", () => {
             this.selectedDialogue = this.dialogues.find(dialogue => dialogue.getId() == this.dialogueSelectElement.value);
-            this.npcIdInput.value = this.selectedDialogue.getId();
-            this.npcGreetingInput.value = this.selectedDialogue.getResponse();
-            this.dialogueTreeBuilder.buildShallowTree(this.selectedDialogue);
+            this.selectDialogue(this.selectedDialogue);
         }, false);
 
+    }
+
+    private selectDialogue(dialogue: DialogueItem){
+        this.npcIdInput.value = dialogue.getId();
+        this.npcGreetingInput.value = dialogue.getResponse();
+        this.dialogueTreeBuilder.buildShallowTree(dialogue);
     }
 
     private fillDialogueList(dialogueTrees: Array<DialogueTree>) {
@@ -75,7 +82,35 @@ export class DialogueManager {
             let newDialogue = this.dialogueTreeBuilder.createDialogueItem();
             this.dialogues.push(newDialogue);
             this.addDialogueOption(newDialogue);
+            this.selectDialogue(newDialogue);
+            this.dialogueSelectElement.selectedIndex = this.dialogueSelectElement.options.length - 1;
         }, false);
+    }
+
+    public addDeleteDialogueListener() {
+
+        let showModalAction = <HTMLInputElement>document.getElementsByClassName("show-delete-modal")[0];
+        let deleteAction = <HTMLInputElement>document.getElementsByClassName("delete-dialogue")[0];
+        let cancelAction = <HTMLInputElement>document.getElementsByClassName("close-modal")[0];
+
+        showModalAction.addEventListener("click", () => {
+            if(this.selectedDialogue != null){
+            this.deleteConfirmationModal.classList.add("is-active");
+            }
+        }, false);
+
+        deleteAction.addEventListener("click", () => {
+            this.dialogues = this.dialogues.filter(d => d != this.selectedDialogue);
+            this.clearSelectedDialogue();
+            this.dialogueSelectElement.remove(this.dialogueSelectElement.selectedIndex);
+            this.dialogueSelectElement.selectedIndex = 0;
+            this.deleteConfirmationModal.classList.remove("is-active");
+        }, false);
+
+        cancelAction.addEventListener("click", () => {
+            this.deleteConfirmationModal.classList.remove("is-active");
+        }, false);
+        
     }
 
     private clear() {
@@ -83,6 +118,10 @@ export class DialogueManager {
             this.dialogueSelectElement.removeChild(this.dialogueSelectElement.firstChild);
         }
         this.dialogues = new Array<DialogueItem>();
+        this.clearSelectedDialogue();
+    }
+
+    private clearSelectedDialogue(){
         this.dialogueTreeBuilder.clear();
         this.selectedDialogue = null;
         this.npcIdInput.value = "";

@@ -4,6 +4,7 @@
     <script type="text/javascript" src="./js/bundle.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="./css/icons.css">
 </head>
 
 <body>
@@ -39,6 +40,9 @@
                     <div class="control">
                         <input type="text" class="npc-id input" value="" />
                     </div>
+                    <div class="control">
+                        <button class="show-delete-modal button is-danger">Delete</button>
+                    </div>
                 </div>
                 <div class="field">
                     <label class="label wide">Greeting:</label>
@@ -48,33 +52,18 @@
                 </div>
             </div>
         </div>
-        <!--<h1 class="title">edit dialogue</h1>
-        <input class="remove-dialogue button" type="button" value="remove"/>
-        <input class="add-subdialogue button" type="button" value="add subdialogue"/>
-        <div class="dialogue-id-wrapper"><label class="label">id</label><input class="dialogue-id input" type="text" placeholder="e.g. john-smith-1"/></div>
-        <div><label class="label">dialogue text</label><textarea class="dialogue-option textarea" placeholder="e.g. What do you have to sell ?" rows="5"></textarea></div>
-        <div><label class="label">response</label><textarea class="dialogue-response textarea" placeholder="e.g. I have plenty of weapons. Just take a look." rows="5"></textarea></div>
-        <div class="conditions-actions-wrapper">
-            <div class="conditions-wrapper">
-                <h4 class="title is-4">conditions</h4>
-                <div>
-                    <div class="select"><select class="new-condition-name"></select></div>
-                    <div class="select"><select class="new-condition-operand"><option>></option></select></div>
-                    <input type="text" class="new-condition-value input" value="0"/>
-                    <input type="button" class="add-condition-action button" value="add"/>
-                    <div class="conditions-list">
+        <div class="modal delete-dialogue-confirmation">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <label class="label">Are you sure you want to delete dialogue tree ?</label>
+                    <div class="modal-actions">
+                        <button class="button is-light close-modal">no</button>
+                        <button class="button is-danger delete-dialogue">yes</button>
                     </div>
                 </div>
             </div>
-            <div class="actions-wrapper">
-                <h4 class="title is-4">actions</h4>
-                <div>
-                    <div class="select"><select class="new-action-name"></select></div>
-                    <input type="button" class="add-new-action button" value="add"/>
-                    <div class="actions-list"></div>
-                </div>
-            </div>
-        </div>-->
+        </div>
     </div>
     <div class="dialogue-tree">
 

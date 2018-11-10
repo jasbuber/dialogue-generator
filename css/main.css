@@ -1,5 +1,5 @@
 body {
-    padding: 20px 0 0 50px;
+    padding: 0px 50px 20px 50px;
 }
 
 .textarea {
@@ -22,10 +22,15 @@ body>div {
 
 .input {
     min-width: 220px;
+    margin-bottom: 15px;
 }
 
 .wide {
     min-width: 350px;
+}
+
+.modal{
+    text-align: center;
 }
 
 .file-loader-wrapper {
@@ -37,6 +42,11 @@ body>div {
     min-width: 150px;
 }
 
+.dialogue-management-div{
+    border-bottom: 1px solid grey;
+    padding: 40px 0px;
+}
+
 .dialogue-management-div .field {
     vertical-align: top;
     display: inline-block;
@@ -45,5 +55,29 @@ body>div {
 
 .npc-dialogue {
     margin-left: 160px;
+    display: inline-block;
+}
+
+.dialogue-tree{
+    margin-top: 50px;
+}
+
+.dialogue-item{
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: row;
+}
+
+.dialogue-item .dialogue-info{
+    display: inline-block;
+    border: 1px solid grey;
+    width: 250px;
+    padding: 2px;
+    margin: 2px 10px;
+}
+
+.dialogue-item .subdialogues{
     display: inline-block;
 }

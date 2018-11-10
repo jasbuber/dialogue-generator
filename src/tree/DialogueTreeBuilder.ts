@@ -25,8 +25,8 @@ export class DialogueTreeBuilder {
     public createDialogueItem(): DialogueItem {
         let newDialogueTree: DialogueTree = {
             id: "new-dialogue-id",
-            dialogue: "new-dialogue",
-            response: "",
+            dialogue: "",
+            response: "Generic greeting",
             subdialogues: new Array<DialogueTree>(),
             actions: new Array<string>(),
             conditions: new Array<string>()
