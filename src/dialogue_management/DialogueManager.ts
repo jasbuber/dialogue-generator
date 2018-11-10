@@ -3,10 +3,11 @@ import { DialogueTree } from "../tree/DialogueTree";
 import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { FileService } from "../io/FileService"
 import { EditDialogueView } from "../edit_view/EditDialogueView";
+import { DialogueItemSelect } from "./DialogueItemSelect";
 
 export class DialogueManager {
 
-    private dialogueSelectElement: HTMLSelectElement = <HTMLSelectElement>document.getElementsByClassName("npcs-list")[0];
+    private npcSelectElement: DialogueItemSelect;
 
     private npcIdInput = <HTMLInputElement>document.getElementsByClassName("npc-id")[0];
 
@@ -30,19 +31,19 @@ export class DialogueManager {
 
     public initialize(dialogueTrees: Array<DialogueTree>): void {
 
+        this.npcSelectElement = new DialogueItemSelect("npcs-list", (dialogueId) => { 
+            let npcDialogue = this.dialogues.find(dialogue => dialogue.getId() == dialogueId);
+            this.selectDialogue(npcDialogue); 
+        });
+
         this.clear();
 
-        this.dialogueSelectElement.add(this.getPlaceholder());
+        this.npcSelectElement.addPlaceholder("Choose npc:");
         this.fillDialogueList(dialogueTrees);
-
-        this.dialogueSelectElement.addEventListener("change", () => {
-            this.selectedDialogue = this.dialogues.find(dialogue => dialogue.getId() == this.dialogueSelectElement.value);
-            this.selectDialogue(this.selectedDialogue);
-        }, false);
-
     }
 
     private selectDialogue(dialogue: DialogueItem){
+        this.selectedDialogue = dialogue;
         this.npcIdInput.value = dialogue.getId();
         this.npcGreetingInput.value = dialogue.getResponse();
         this.dialogueTreeBuilder.buildShallowTree(dialogue);
@@ -53,23 +54,8 @@ export class DialogueManager {
         for (var i = 0; i < dialogueTrees.length; i++) {
             let dialogueItem = new DialogueItem(dialogueTrees[i], true);
             this.dialogues.push(dialogueItem);
-            this.addDialogueOption(dialogueItem);
+            this.npcSelectElement.addOption(dialogueItem);
         }
-    }
-
-    private getPlaceholder(): HTMLOptionElement {
-        let placeholder = <HTMLOptionElement>document.createElement("option");
-        placeholder.text = "Choose Npc"
-        placeholder.selected = true;
-        placeholder.disabled = true;
-        return placeholder;
-    }
-
-    private addDialogueOption(dialogueItem: DialogueItem) {
-        let dialogueOption = <HTMLOptionElement>document.createElement("option");
-
-        dialogueOption.text = dialogueItem.getId();
-        this.dialogueSelectElement.add(dialogueOption);
     }
 
     private addExportListener() {
@@ -82,9 +68,9 @@ export class DialogueManager {
         createAction.addEventListener("click", () => {
             let newDialogue = this.dialogueTreeBuilder.createDialogueItem();
             this.dialogues.push(newDialogue);
-            this.addDialogueOption(newDialogue);
+            this.npcSelectElement.addOption(newDialogue);
             this.selectDialogue(newDialogue);
-            this.dialogueSelectElement.selectedIndex = this.dialogueSelectElement.options.length - 1;
+            this.npcSelectElement.selectOption(newDialogue);
         }, false);
     }
 
@@ -103,8 +89,7 @@ export class DialogueManager {
         deleteAction.addEventListener("click", () => {
             this.dialogues = this.dialogues.filter(d => d != this.selectedDialogue);
             this.clearSelectedDialogue();
-            this.dialogueSelectElement.remove(this.dialogueSelectElement.selectedIndex);
-            this.dialogueSelectElement.selectedIndex = 0;
+            this.npcSelectElement.removeSelectedOption();
             this.deleteConfirmationModal.classList.remove("is-active");
         }, false);
 
@@ -115,9 +100,7 @@ export class DialogueManager {
     }
 
     private clear() {
-        while (this.dialogueSelectElement.firstChild) {
-            this.dialogueSelectElement.removeChild(this.dialogueSelectElement.firstChild);
-        }
+        this.npcSelectElement.clear();
         this.dialogues = new Array<DialogueItem>();
         this.clearSelectedDialogue();
     }
@@ -132,8 +115,7 @@ export class DialogueManager {
     public addIdChangedListener() {
         this.npcIdInput.addEventListener("change", (e) => {
             let updatedId = (<HTMLInputElement>e.target).value;
-            let selectedIndex = this.dialogueSelectElement.selectedIndex;
-            this.dialogueSelectElement.options[selectedIndex].text = updatedId;
+            this.npcSelectElement.updateSelectedOption(updatedId);
             this.selectedDialogue.setId(updatedId);
         }, false);
     }
