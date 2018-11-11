@@ -17,7 +17,7 @@ export class DialogueManager {
 
     private dialogues = new Array<DialogueItem>();
 
-    private dialogueTreeBuilder: DialogueTreeBuilder = new DialogueTreeBuilder(new EditDialogueView());
+    private dialogueTreeBuilder: DialogueTreeBuilder = new DialogueTreeBuilder();
 
     private deleteConfirmationModal: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName("delete-dialogue-confirmation")[0];
 

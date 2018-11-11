@@ -70,6 +70,7 @@ export class DialogueItem {
         actionsDiv.classList.add("item-actions");
         this.expandTreeElement.classList.add("expand-tree");
         this.addSubdialogueElement.classList.add("icon-plus");
+        this.addSubdialogueElement.classList.add("add-subdialogue");
 
         if (this.jsonItem.subdialogues.length > 0) {
             this.expandTreeElement.classList.add("icon-list2");
@@ -109,10 +110,10 @@ export class DialogueItem {
     public addSubdialogue(item: DialogueItem) {
         this.subdialogues.push(item);
 
-        if (this.actionsElement.innerText == "+") {
-            this.actionsElement.click();
-        } else if (this.actionsElement.innerText == "") {
-            this.actionsElement.innerText = "-";
+        if (this.expandTreeElement.classList.contains("icon-list2")) {
+            this.expandTreeElement.click();
+        } else if (this.expandTreeElement.classList.contains("hidden")) {
+            this.expandTreeElement.classList.add("icon-shrink2")
         }
         this.subdialoguesElement.appendChild(item.getDocumentItem());
     }
@@ -209,6 +210,10 @@ export class DialogueItem {
 
     public hasListeners(): boolean{
         return this.listenersAttached;
+    }
+
+    public getAddSubdialogueElement(): HTMLDivElement{
+        return this.addSubdialogueElement;
     }
 
 }

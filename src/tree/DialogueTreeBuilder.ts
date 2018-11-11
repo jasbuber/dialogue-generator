@@ -1,7 +1,6 @@
 import { DialogueTree } from "./DialogueTree";
 import { DialogueItem } from "./DialogueItem";
 import { TreeEventManager } from "./TreeEventManager";
-import { EditDialogueView } from "../edit_view/EditDialogueView";
 
 export class DialogueTreeBuilder {
 
@@ -9,11 +8,11 @@ export class DialogueTreeBuilder {
 
     private dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
 
-    constructor(editView: EditDialogueView) {
-        this.treeEventManager = new TreeEventManager(editView);
+    constructor() {
+        this.treeEventManager = new TreeEventManager();
     }
 
-    public initializeTree(dialogue: DialogueItem){
+    public initializeTree(dialogue: DialogueItem) {
         this.clear();
         this.appendTree(dialogue);
     }
@@ -32,11 +31,27 @@ export class DialogueTreeBuilder {
         return dialogueItem;
     }
 
+    private createSubdialogueItem(dialogueItem: DialogueItem): DialogueItem {
+
+        let parentId: string = dialogueItem.getId();
+        let childId = parentId + "-" + (dialogueItem.getSubdialogues().length + 1);
+        let newDialogueTree: DialogueTree = {
+            id: childId,
+            dialogue: "new-dialogue",
+            response: "",
+            subdialogues: new Array<DialogueTree>(),
+            actions: new Array<string>(),
+            conditions: new Array<string>()
+        }
+
+        return new DialogueItem(newDialogueTree, false);
+    }
+
     private appendTree(dialogueItem: DialogueItem): void {
         this.dialogueTree.appendChild(dialogueItem.getDocumentItem());
 
-        if(!dialogueItem.hasListeners()){
-            this.treeEventManager.addListeners(dialogueItem);
+        if (!dialogueItem.hasListeners()) {
+            this.treeEventManager.addListeners(dialogueItem, this.createSubdialogueItem);
             dialogueItem.setHasListeners(true);
         }
     }

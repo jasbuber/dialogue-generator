@@ -1,17 +1,14 @@
 import { DialogueItem } from "./DialogueItem";
-import { EditDialogueView } from "../edit_view/EditDialogueView";
 
 export class TreeEventManager {
 
-    private editView: EditDialogueView;
+    private createSubdialogue: (dialogueItem: DialogueItem) => DialogueItem;
 
-    constructor(editView: EditDialogueView) {
-        this.editView = editView;
-    }
-
-    public addListeners(item: DialogueItem): void {
+    public addListeners(item: DialogueItem, createSubdialogue: (dialogueItem: DialogueItem) => DialogueItem): void {
+        this.createSubdialogue = createSubdialogue;
         this.addExpandListener(item);
         this.addEditListener(item);
+        this.addCreateListener(item);
     }
 
     private addExpandListener(item: DialogueItem): void {
@@ -25,8 +22,7 @@ export class TreeEventManager {
             if (!item.isSubdialoguesVisible()) {
                 if (subdialoguesDiv.children.length == 0) {
                     item.getSubdialogues().forEach((s) => {
-                        this.addExpandListener(s);
-                        this.addEditListener(s);
+                        this.addListeners(s, this.createSubdialogue);
                         subdialoguesDiv.appendChild(s.getDocumentItem());
                     });
                 }
@@ -45,7 +41,7 @@ export class TreeEventManager {
     }
 
     private addEditListener(item: DialogueItem): void {
-
+/*
         let nameSpan: HTMLSpanElement = item.getNameElement();
 
         nameSpan.addEventListener("click", (e) => {
@@ -60,6 +56,17 @@ export class TreeEventManager {
             item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("is-primary");
             item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("button");
 
+        }, false);*/
+    }
+
+    private addCreateListener(item: DialogueItem): void {
+
+        let createElement: HTMLDivElement = item.getAddSubdialogueElement();
+
+        createElement.addEventListener("click", (e) => {
+            let newSubdialogue: DialogueItem = this.createSubdialogue(item);
+            item.addSubdialogue(newSubdialogue);
+            this.addListeners(newSubdialogue, this.createSubdialogue);
         }, false);
     }
 
