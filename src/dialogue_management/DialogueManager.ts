@@ -9,6 +9,8 @@ export class DialogueManager {
 
     private npcSelectElement: DialogueItemSelect;
 
+    private dialogueSelectElement: DialogueItemSelect;
+
     private npcIdInput = <HTMLInputElement>document.getElementsByClassName("npc-id")[0];
 
     private npcGreetingInput = <HTMLInputElement>document.getElementsByClassName("npc-greeting")[0];
@@ -36,9 +38,15 @@ export class DialogueManager {
             this.selectDialogue(npcDialogue); 
         });
 
+        this.dialogueSelectElement = new DialogueItemSelect("dialogue-list", (dialogueId) => { 
+            let dialogue = this.selectedDialogue.getSubdialogues().find(dialogue => dialogue.getId() == dialogueId);
+            this.dialogueTreeBuilder.initializeTree(dialogue);
+        });
+
         this.clear();
 
         this.npcSelectElement.addPlaceholder("Choose npc:");
+        this.dialogueSelectElement.addPlaceholder("Choose dialogue:");
         this.fillDialogueList(dialogueTrees);
     }
 
@@ -46,8 +54,9 @@ export class DialogueManager {
         this.selectedDialogue = dialogue;
         this.npcIdInput.value = dialogue.getId();
         this.npcGreetingInput.value = dialogue.getResponse();
-        this.dialogueTreeBuilder.buildShallowTree(dialogue);
+        this.dialogueSelectElement.addAllOptions(dialogue.getSubdialogues());
         this.selectedDialogue = dialogue;
+        this.dialogueTreeBuilder.clear();
     }
 
     private fillDialogueList(dialogueTrees: Array<DialogueTree>) {

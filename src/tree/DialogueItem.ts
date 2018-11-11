@@ -75,8 +75,8 @@ export class DialogueItem {
             this.expandTreeElement.classList.add("hidden");
         }
 
-        actionsDiv.appendChild(this.expandTreeElement);
         actionsDiv.appendChild(this.addSubdialogueElement);
+        actionsDiv.appendChild(this.expandTreeElement);
         return actionsDiv;
     }
 
@@ -195,6 +195,10 @@ export class DialogueItem {
 
     public isRemoved(): boolean {
         return this.removed;
+    }
+
+    public isRoot(): boolean{
+        return this.isDialogueRoot;
     }
 
 }

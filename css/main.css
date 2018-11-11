@@ -66,8 +66,9 @@ body>div {
     display: inline-block;
 }
 
-.dialogue-tree{
-    margin-top: 30px;
+.dialogue-tree-controls{
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 .dialogue-item{
@@ -83,7 +84,7 @@ body>div {
     border: 1px solid grey;
     width: 250px;
     padding: 2px;
-    margin: 20px;
+    margin: 25px;
 }
 
 .dialogue-item .dialogue-info .item-actions > div{

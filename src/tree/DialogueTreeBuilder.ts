@@ -13,6 +13,11 @@ export class DialogueTreeBuilder {
         this.treeEventManager = new TreeEventManager(editView);
     }
 
+    public initializeTree(dialogue: DialogueItem){
+        this.clear();
+        this.appendTree(dialogue);
+    }
+
     public buildShallowTree(dialogue: DialogueItem): void {
 
         this.clear();
