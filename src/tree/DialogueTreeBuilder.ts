@@ -18,15 +18,6 @@ export class DialogueTreeBuilder {
         this.appendTree(dialogue);
     }
 
-    public buildShallowTree(dialogue: DialogueItem): void {
-
-        this.clear();
-
-        dialogue.getSubdialogues().forEach(item => {
-            this.appendTree(item);
-        })
-    }
-
     public createDialogueItem(): DialogueItem {
         let newDialogueTree: DialogueTree = {
             id: "new-dialogue-id",
@@ -43,7 +34,11 @@ export class DialogueTreeBuilder {
 
     private appendTree(dialogueItem: DialogueItem): void {
         this.dialogueTree.appendChild(dialogueItem.getDocumentItem());
-        this.treeEventManager.addListeners(dialogueItem);
+
+        if(!dialogueItem.hasListeners()){
+            this.treeEventManager.addListeners(dialogueItem);
+            dialogueItem.setHasListeners(true);
+        }
     }
 
     public clear() {

@@ -24,6 +24,8 @@ export class DialogueItem {
 
     private isDialogueRoot: boolean;
 
+    private listenersAttached: boolean;
+
     constructor(jsonItem: DialogueTree, isRoot: boolean) {
         this.isDialogueRoot = isRoot;
         this.jsonItem = jsonItem;
@@ -199,6 +201,14 @@ export class DialogueItem {
 
     public isRoot(): boolean{
         return this.isDialogueRoot;
+    }
+
+    public setHasListeners(listenersAttached: boolean){
+        this.listenersAttached = listenersAttached;
+    }
+
+    public hasListeners(): boolean{
+        return this.listenersAttached;
     }
 
 }
