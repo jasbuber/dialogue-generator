@@ -26,7 +26,7 @@ export class DialogueItemSelect{
         if(dialogueItem.isRoot()){
             dialogueOption.text = dialogueItem.getId();
         }else{
-            dialogueOption.text = dialogueItem.getNameElement().innerText;
+            dialogueOption.text = dialogueItem.getDocumentItem().getName();
         }
         dialogueOption.value =  dialogueItem.getId();
         this.selectElement.add(dialogueOption);
@@ -55,6 +55,7 @@ export class DialogueItemSelect{
     public updateSelectedOption(newValue: string){
         let selectedIndex = this.selectElement.selectedIndex;
         this.selectElement.options[selectedIndex].text = newValue;
+        this.selectElement.options[selectedIndex].value = newValue; 
     }
 
     public clear(){

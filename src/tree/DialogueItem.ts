@@ -1,4 +1,5 @@
-import { DialogueTree } from "./DialogueTree"
+import { DialogueTree } from "./DialogueTree";
+import { DialogueDocumentElement } from "./DialogueDocumentElement";
 
 export class DialogueItem {
 
@@ -6,17 +7,7 @@ export class DialogueItem {
 
     private subdialoguesVisible = false;
 
-    private documentItem: HTMLDivElement;
-
-    private actionsElement: HTMLDivElement;
-
-    private nameElement: HTMLSpanElement;
-
-    private addSubdialogueElement: HTMLDivElement;
-
-    private expandTreeElement: HTMLDivElement;
-
-    private subdialoguesElement: HTMLSpanElement;
+    private documentItem: DialogueDocumentElement;
 
     private subdialogues: Array<DialogueItem> = new Array<DialogueItem>();
 
@@ -29,78 +20,9 @@ export class DialogueItem {
     constructor(jsonItem: DialogueTree, isRoot: boolean) {
         this.isDialogueRoot = isRoot;
         this.jsonItem = jsonItem;
-        this.buildShallow(isRoot);
-    }
-
-    private buildShallow(isRoot: boolean): HTMLDivElement {
-        this.actionsElement = this.buildActionsDiv();
-
-        let name = this.jsonItem.dialogue.slice(0, 30);
-        if (isRoot) {
-            name = this.jsonItem.id;
-        }
-        this.nameElement = this.buildSpan("dialogue-name", name);
-
-        let dialogueInfo: HTMLDivElement = document.createElement("div");
-        dialogueInfo.classList.add("dialogue-info");
-        dialogueInfo.appendChild(this.actionsElement);
-        dialogueInfo.appendChild(this.nameElement);
-
-        let dialogueItem: HTMLDivElement = document.createElement("div");
-        dialogueItem.classList.add("dialogue-item");
-        dialogueItem.appendChild(dialogueInfo);
-
-        this.subdialoguesElement = document.createElement("div");
-        this.subdialoguesElement.classList.add("subdialogues");
-
-        dialogueItem.appendChild(dialogueInfo);
-        dialogueItem.appendChild(this.subdialoguesElement);
-
-        this.documentItem = dialogueItem;
-
         this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub, false)));
 
-        return this.documentItem;
-    }
-
-    private buildActionsDiv(): HTMLDivElement {
-        let actionsDiv: HTMLDivElement = document.createElement("div");
-        this.expandTreeElement = document.createElement("div");
-        this.addSubdialogueElement = document.createElement("div");
-        actionsDiv.classList.add("item-actions");
-        this.expandTreeElement.classList.add("expand-tree");
-        this.addSubdialogueElement.classList.add("icon-plus");
-        this.addSubdialogueElement.classList.add("add-subdialogue");
-
-        if (this.jsonItem.subdialogues.length > 0) {
-            this.expandTreeElement.classList.add("icon-list2");
-        }else{
-            this.expandTreeElement.classList.add("hidden");
-        }
-
-        actionsDiv.appendChild(this.addSubdialogueElement);
-        actionsDiv.appendChild(this.expandTreeElement);
-        return actionsDiv;
-    }
-
-    private buildSpan(className: string, text: string): HTMLSpanElement {
-        let span: HTMLSpanElement = document.createElement('span');
-        span.classList.add(className);
-        span.innerText = text;
-
-        return span;
-    }
-
-    public getExpandElement(): HTMLSpanElement {
-        return this.expandTreeElement
-    }
-
-    public getNameElement(): HTMLSpanElement {
-        return this.nameElement;
-    }
-
-    public getSubdialoguesElement(): HTMLSpanElement {
-        return this.subdialoguesElement;
+        this.documentItem = new DialogueDocumentElement(this); 
     }
 
     public getSubdialogues(): Array<DialogueItem> {
@@ -109,13 +31,7 @@ export class DialogueItem {
 
     public addSubdialogue(item: DialogueItem) {
         this.subdialogues.push(item);
-
-        if (this.expandTreeElement.classList.contains("icon-list2")) {
-            this.expandTreeElement.click();
-        } else if (this.expandTreeElement.classList.contains("hidden")) {
-            this.expandTreeElement.classList.add("icon-shrink2")
-        }
-        this.subdialoguesElement.appendChild(item.getDocumentItem());
+        this.documentItem.addSubdialogue(item.getDocumentItem());
     }
 
     public isSubdialoguesVisible(): boolean {
@@ -126,7 +42,7 @@ export class DialogueItem {
         this.subdialoguesVisible = isVisible;
     }
 
-    public getDocumentItem(): HTMLDivElement {
+    public getDocumentItem(): DialogueDocumentElement {
         return this.documentItem;
     }
 
@@ -162,7 +78,7 @@ export class DialogueItem {
         this.jsonItem.id = id;
 
         if (this.isDialogueRoot) {
-            this.nameElement.innerText = id;
+            this.documentItem.setName(id);
         }
     }
 
@@ -170,7 +86,7 @@ export class DialogueItem {
         this.jsonItem.dialogue = dialogue;
 
         if (!this.isDialogueRoot) {
-            this.nameElement.innerText = dialogue.slice(0, 30);
+            this.documentItem.setName(dialogue);
         }
     }
 
@@ -210,10 +126,6 @@ export class DialogueItem {
 
     public hasListeners(): boolean{
         return this.listenersAttached;
-    }
-
-    public getAddSubdialogueElement(): HTMLDivElement{
-        return this.addSubdialogueElement;
     }
 
 }

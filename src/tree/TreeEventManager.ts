@@ -13,17 +13,17 @@ export class TreeEventManager {
 
     private addExpandListener(item: DialogueItem): void {
 
-        let expandSpan: HTMLSpanElement = item.getExpandElement();
+        let expandSpan: HTMLSpanElement = item.getDocumentItem().getExpandElement();
 
         expandSpan.addEventListener("click", (e) => {
 
-            let subdialoguesDiv = item.getSubdialoguesElement();
+            let subdialoguesDiv = item.getDocumentItem().getSubdialoguesElement();
 
             if (!item.isSubdialoguesVisible()) {
                 if (subdialoguesDiv.children.length == 0) {
                     item.getSubdialogues().forEach((s) => {
                         this.addListeners(s, this.createSubdialogue);
-                        subdialoguesDiv.appendChild(s.getDocumentItem());
+                        subdialoguesDiv.appendChild(s.getDocumentItem().getDocumentElement());
                     });
                 }
                 expandSpan.classList.remove("icon-list2");
@@ -61,7 +61,7 @@ export class TreeEventManager {
 
     private addCreateListener(item: DialogueItem): void {
 
-        let createElement: HTMLDivElement = item.getAddSubdialogueElement();
+        let createElement: HTMLDivElement = item.getDocumentItem().getAddSubdialogueElement();
 
         createElement.addEventListener("click", (e) => {
             let newSubdialogue: DialogueItem = this.createSubdialogue(item);

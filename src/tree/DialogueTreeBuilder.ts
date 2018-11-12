@@ -48,7 +48,7 @@ export class DialogueTreeBuilder {
     }
 
     private appendTree(dialogueItem: DialogueItem): void {
-        this.dialogueTree.appendChild(dialogueItem.getDocumentItem());
+        this.dialogueTree.appendChild(dialogueItem.getDocumentItem().getDocumentElement());
 
         if (!dialogueItem.hasListeners()) {
             this.treeEventManager.addListeners(dialogueItem, this.createSubdialogueItem);
