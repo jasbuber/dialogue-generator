@@ -1,5 +1,5 @@
 import { DialogueTree } from "./DialogueTree";
-import { DialogueDocumentElement } from "./DialogueDocumentElement";
+import { DialogueDocumentElement } from "./dialogue_document_element/DialogueDocumentElement";
 
 export class DialogueItem {
 
@@ -22,7 +22,7 @@ export class DialogueItem {
         this.jsonItem = jsonItem;
         this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub, false)));
 
-        this.documentItem = new DialogueDocumentElement(this); 
+        this.documentItem = new DialogueDocumentElement(this);
     }
 
     public getSubdialogues(): Array<DialogueItem> {
@@ -116,15 +116,15 @@ export class DialogueItem {
         return this.removed;
     }
 
-    public isRoot(): boolean{
+    public isRoot(): boolean {
         return this.isDialogueRoot;
     }
 
-    public setHasListeners(listenersAttached: boolean){
+    public setHasListeners(listenersAttached: boolean) {
         this.listenersAttached = listenersAttached;
     }
 
-    public hasListeners(): boolean{
+    public hasListeners(): boolean {
         return this.listenersAttached;
     }
 

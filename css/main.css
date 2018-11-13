@@ -35,8 +35,8 @@ body>div {
 
 .item-actions{
     position: absolute;
-    top: -10px;
-    right: -30px;
+    top: 10px;
+    right: 0;
     vertical-align: top;
     cursor: pointer;
 }
@@ -78,17 +78,20 @@ body>div {
     flex-direction: row;
 }
 
-.dialogue-item .dialogue-info {
+.dialogue-item .dialogue-info-wrapper{
     position: relative;
+}
+
+.dialogue-item .item-actions > div{
+    padding-bottom: 15px;
+}
+
+.dialogue-item .dialogue-info {
     display: inline-block;
     border: 1px solid grey;
     width: 250px;
     padding: 2px;
     margin: 25px;
-}
-
-.dialogue-item .dialogue-info .item-actions > div{
-    padding-bottom: 15px;
 }
 
 .dialogue-item .subdialogues{
