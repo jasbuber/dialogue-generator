@@ -15,4 +15,12 @@ export class DialogueElement {
         return div;
     }
 
+    protected buildElement(classes: Array<string>, name: string): HTMLElement {
+        let element: HTMLElement = document.createElement(name);
+        classes.forEach(c => element.classList.add(c));
+
+        return element;
+    }
+
+
 }

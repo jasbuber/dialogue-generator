@@ -35,7 +35,7 @@ body>div {
 
 .item-actions{
     position: absolute;
-    top: 10px;
+    top: 25%;
     right: 0;
     vertical-align: top;
     cursor: pointer;
@@ -88,10 +88,34 @@ body>div {
 
 .dialogue-item .dialogue-info {
     display: inline-block;
-    border: 1px solid grey;
+    border: 1px solid #DDD;
+    border-radius: 10px;
     width: 250px;
-    padding: 2px;
+    padding: 7px;
     margin: 25px;
+    text-align: center;
+}
+
+.dialogue-item .dialogue-info .icon{
+    margin-top: 5px;
+}
+
+.dialogue-item .dialogue-item-indicators{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7px;
+}
+
+.icon-lock{
+    color: #977393;
+}
+
+.icon-exit, .icon-coin-dollar{
+    color: #D1495B;
+}
+
+.icon-share2, .icon-arrow-left{
+    color: #8FC93A;
 }
 
 .dialogue-item .subdialogues{
