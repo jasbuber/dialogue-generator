@@ -36,7 +36,7 @@ body>div {
 .item-actions{
     position: absolute;
     top: 25%;
-    right: 0;
+    right: 5px;
     vertical-align: top;
     cursor: pointer;
 }
@@ -50,8 +50,15 @@ body>div {
     min-width: 150px;
 }
 
+svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
 .dialogue-management-div{
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #AAA;
     padding: 40px 0px;
 }
 
@@ -88,7 +95,7 @@ body>div {
 
 .dialogue-item .dialogue-info {
     display: inline-block;
-    border: 1px solid #DDD;
+    border: 1px solid #AAA;
     border-radius: 10px;
     width: 250px;
     padding: 7px;
@@ -104,6 +111,10 @@ body>div {
     display: flex;
     justify-content: space-between;
     padding: 0 7px;
+}
+
+.dialogue-tree{
+    position: relative;
 }
 
 .icon-lock{

@@ -11,5 +11,8 @@
   },
   "scripts": {
     "start": "concurrently \"tsc -w\" \"http-server -c-1\" \"watchify js/main.js -s module -o js/bundle.js\""
+  },
+  "dependencies": {
+    "svg.js": "^2.7.0"
   }
 }

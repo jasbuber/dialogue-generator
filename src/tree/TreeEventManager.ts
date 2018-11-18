@@ -1,8 +1,15 @@
 import { DialogueItem } from "./DialogueItem";
+import { ConnectionManager } from "./ConnectionManager";
 
 export class TreeEventManager {
 
     private createSubdialogue: (dialogueItem: DialogueItem) => DialogueItem;
+
+    private connectionManager: ConnectionManager;
+
+    public constructor(){
+        this.connectionManager = new ConnectionManager();
+    }
 
     public addListeners(item: DialogueItem, createSubdialogue: (dialogueItem: DialogueItem) => DialogueItem): void {
         this.createSubdialogue = createSubdialogue;
@@ -28,13 +35,15 @@ export class TreeEventManager {
                 }
                 expandSpan.classList.remove("icon-list2");
                 expandSpan.classList.add("icon-shrink2");
-                subdialoguesDiv.classList.remove("hidden")
+                subdialoguesDiv.classList.remove("hidden");
                 item.setSubdialoguesVisible(true);
+                this.connectionManager.drawConnections(item);
             } else {
                 subdialoguesDiv.classList.add("hidden");
                 expandSpan.classList.add("icon-list2");
                 expandSpan.classList.remove("icon-shrink2");
                 item.setSubdialoguesVisible(false);
+                this.connectionManager.eraseConnections(item);
             }
 
         }, false);
@@ -67,6 +76,8 @@ export class TreeEventManager {
             let newSubdialogue: DialogueItem = this.createSubdialogue(item);
             item.addSubdialogue(newSubdialogue);
             this.addListeners(newSubdialogue, this.createSubdialogue);
+            
+            this.connectionManager.redraw();
         }, false);
     }
 

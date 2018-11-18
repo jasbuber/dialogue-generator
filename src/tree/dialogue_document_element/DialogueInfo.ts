@@ -27,4 +27,8 @@ export abstract class DialogueInfo extends DialogueElement {
         return this.nameElement.innerText;
     }
 
+    public getDialogueInfo(): HTMLDivElement{
+        return this.dialogueInfo;
+    }
+
 }

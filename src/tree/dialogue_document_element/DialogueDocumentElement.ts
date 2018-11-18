@@ -13,6 +13,8 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private dialogueInfo: DialogueInfo;
 
+    private dialogueInfoWrapper: HTMLDivElement;
+
     private subdialoguesElement: HTMLSpanElement;
 
     constructor(dialogueItem: DialogueItem) {
@@ -20,14 +22,14 @@ export class DialogueDocumentElement extends DialogueElement {
 
         this.dialogueInfo = new SlimDialogueInfo(dialogueItem);
         let actionsElement = this.buildActionsDiv(dialogueItem);
-        let dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
-        dialogueInfoWrapper.appendChild(this.dialogueInfo.getDocumentElement());
-        dialogueInfoWrapper.appendChild(actionsElement);
+        this.dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
+        this.dialogueInfoWrapper.appendChild(this.dialogueInfo.getDocumentElement());
+        this.dialogueInfoWrapper.appendChild(actionsElement);
 
         this.subdialoguesElement = this.buildDiv(["subdialogues"]);
 
         this.documentElement = this.buildDiv(["dialogue-item"]);
-        this.documentElement.appendChild(dialogueInfoWrapper);
+        this.documentElement.appendChild(this.dialogueInfoWrapper);
         this.documentElement.appendChild(this.subdialoguesElement);
     }
 
@@ -87,6 +89,14 @@ export class DialogueDocumentElement extends DialogueElement {
 
     public getDocumentElement() {
         return this.documentElement;
+    }
+
+    public getDialogueInfo(): HTMLDivElement{
+        return this.dialogueInfo.getDialogueInfo();
+    }
+
+    public getDialogueInfoWrapper(): HTMLDivElement{
+        return this.dialogueInfoWrapper;
     }
 
 }
