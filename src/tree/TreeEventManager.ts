@@ -75,8 +75,6 @@ export class TreeEventManager {
         createElement.addEventListener("click", (e) => {
             let newSubdialogue: DialogueItem = this.createSubdialogue(item);
             item.addSubdialogue(newSubdialogue);
-            this.addListeners(newSubdialogue, this.createSubdialogue);
-            
             this.connectionManager.redraw();
         }, false);
     }

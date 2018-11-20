@@ -110,6 +110,7 @@ export class DialogueManager {
 
     private clear() {
         this.npcSelectElement.clear();
+        this.dialogueSelectElement.clear();
         this.dialogues = new Array<DialogueItem>();
         this.clearSelectedDialogue();
     }

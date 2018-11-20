@@ -54,7 +54,9 @@ export class DialogueDocumentElement extends DialogueElement {
         if (this.expandTreeElement.classList.contains("icon-list2")) {
             this.expandTreeElement.click();
         } else if (this.expandTreeElement.classList.contains("hidden")) {
-            this.expandTreeElement.classList.add("icon-shrink2");
+            this.expandTreeElement.classList.add("icon-list2");
+            this.expandTreeElement.classList.remove("hidden");
+            this.expandTreeElement.click();
         }
         this.subdialoguesElement.appendChild(subdialogueElement.getDocumentElement());
     }
