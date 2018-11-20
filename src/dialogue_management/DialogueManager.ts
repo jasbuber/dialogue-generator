@@ -2,7 +2,6 @@ import { DialogueItem } from "../tree/DialogueItem";
 import { DialogueTree } from "../tree/DialogueTree";
 import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { FileService } from "../io/FileService"
-import { EditDialogueView } from "../edit_view/EditDialogueView";
 import { DialogueItemSelect } from "./DialogueItemSelect";
 
 export class DialogueManager {
@@ -113,6 +112,7 @@ export class DialogueManager {
         this.dialogueSelectElement.clear();
         this.dialogues = new Array<DialogueItem>();
         this.clearSelectedDialogue();
+        this.dialogueTreeBuilder = new DialogueTreeBuilder();
     }
 
     private clearSelectedDialogue(){
