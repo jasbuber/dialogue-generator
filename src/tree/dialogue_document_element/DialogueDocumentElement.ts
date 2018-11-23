@@ -17,9 +17,12 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private subdialoguesElement: HTMLSpanElement;
 
+    private dialogueItem: DialogueItem;
+
     constructor(dialogueItem: DialogueItem) {
         super();
 
+        this.dialogueItem = dialogueItem;
         this.dialogueInfo = new SlimDialogueInfo(dialogueItem);
         let actionsElement = this.buildActionsDiv(dialogueItem);
         this.dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
@@ -99,6 +102,10 @@ export class DialogueDocumentElement extends DialogueElement {
 
     public getDialogueInfoWrapper(): HTMLDivElement{
         return this.dialogueInfoWrapper;
+    }
+
+    public toggle(){
+
     }
 
 }

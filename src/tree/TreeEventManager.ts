@@ -1,5 +1,6 @@
 import { DialogueItem } from "./DialogueItem";
 import { ConnectionManager } from "./ConnectionManager";
+import { DialogueInfo } from "./dialogue_document_element/DialogueInfo";
 
 export class TreeEventManager {
 
@@ -50,22 +51,12 @@ export class TreeEventManager {
     }
 
     private addEditListener(item: DialogueItem): void {
-/*
-        let nameSpan: HTMLSpanElement = item.getNameElement();
+        
+        let dialogueInfo: HTMLDivElement = item.getDocumentItem().getDialogueInfo();
 
-        nameSpan.addEventListener("click", (e) => {
-
-            let dialogueItem = this.editView.getDialogueItem();
-            if (dialogueItem != null) {
-                let dialogueInfo = dialogueItem.getDocumentItem().getElementsByClassName("dialogue-info")[0];
-                dialogueInfo.classList.remove("is-primary");
-                dialogueInfo.classList.remove("button");
-            }
-            this.editView.setDialogueItem(item);
-            item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("is-primary");
-            item.getDocumentItem().getElementsByClassName("dialogue-info")[0].classList.add("button");
-
-        }, false);*/
+        dialogueInfo.addEventListener("click", () => {
+            item.getDocumentItem().toggle();
+        });
     }
 
     private addCreateListener(item: DialogueItem): void {
