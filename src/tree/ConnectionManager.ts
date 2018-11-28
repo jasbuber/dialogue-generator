@@ -97,10 +97,10 @@ export class ConnectionManager {
 
             commonX = x;
 
-            if(y > endY){
+            if (y > endY) {
                 endY = y;
             }
-            if(y < startY || startY == 0){
+            if (y < startY || startY == 0) {
                 startY = y;
             }
         });

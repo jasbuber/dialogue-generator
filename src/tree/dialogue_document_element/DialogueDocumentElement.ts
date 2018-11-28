@@ -113,15 +113,15 @@ export class DialogueDocumentElement extends DialogueElement {
         return this.documentElement;
     }
 
-    public getDialogueInfo(): HTMLDivElement{
+    public getDialogueInfo(): HTMLDivElement {
         return this.dialogueInfo.getDialogueInfo();
     }
 
-    public getDialogueInfoWrapper(): HTMLDivElement{
+    public getDialogueInfoWrapper(): HTMLDivElement {
         return this.dialogueInfoWrapper;
     }
 
-    public toggle(){
+    public toggle() {
 
     }
 

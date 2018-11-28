@@ -32,12 +32,12 @@ export class DialogueManager {
 
     public initialize(dialogueTrees: Array<DialogueTree>): void {
 
-        this.npcSelectElement = new DialogueItemSelect("npcs-list", (dialogueId) => { 
+        this.npcSelectElement = new DialogueItemSelect("npcs-list", (dialogueId) => {
             let npcDialogue = this.dialogues.find(dialogue => dialogue.getId() == dialogueId);
-            this.selectDialogue(npcDialogue); 
+            this.selectDialogue(npcDialogue);
         });
 
-        this.dialogueSelectElement = new DialogueItemSelect("dialogue-list", (dialogueId) => { 
+        this.dialogueSelectElement = new DialogueItemSelect("dialogue-list", (dialogueId) => {
             let dialogue = this.selectedDialogue.getSubdialogues().find(dialogue => dialogue.getId() == dialogueId);
             this.dialogueTreeBuilder.initializeTree(dialogue);
         });
@@ -49,7 +49,7 @@ export class DialogueManager {
         this.fillDialogueList(dialogueTrees);
     }
 
-    private selectDialogue(dialogue: DialogueItem){
+    private selectDialogue(dialogue: DialogueItem) {
         this.selectedDialogue = dialogue;
         this.npcIdInput.value = dialogue.getId();
         this.npcGreetingInput.value = dialogue.getResponse();
@@ -89,8 +89,8 @@ export class DialogueManager {
         let cancelAction = <HTMLInputElement>document.getElementsByClassName("close-modal")[0];
 
         showModalAction.addEventListener("click", () => {
-            if(this.selectedDialogue != null){
-            this.deleteConfirmationModal.classList.add("is-active");
+            if (this.selectedDialogue != null) {
+                this.deleteConfirmationModal.classList.add("is-active");
             }
         }, false);
 
@@ -104,7 +104,7 @@ export class DialogueManager {
         cancelAction.addEventListener("click", () => {
             this.deleteConfirmationModal.classList.remove("is-active");
         }, false);
-        
+
     }
 
     private clear() {
@@ -115,7 +115,7 @@ export class DialogueManager {
         this.dialogueTreeBuilder = new DialogueTreeBuilder();
     }
 
-    private clearSelectedDialogue(){
+    private clearSelectedDialogue() {
         this.dialogueTreeBuilder.clear();
         this.selectedDialogue = null;
         this.npcIdInput.value = "";

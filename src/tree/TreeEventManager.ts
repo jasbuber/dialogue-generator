@@ -8,7 +8,7 @@ export class TreeEventManager {
 
     private connectionManager: ConnectionManager;
 
-    public constructor(){
+    public constructor() {
         this.connectionManager = new ConnectionManager();
     }
 
@@ -40,7 +40,7 @@ export class TreeEventManager {
     }
 
     private addEditListener(item: DialogueItem): void {
-        
+
         let dialogueInfo: HTMLDivElement = item.getDocumentItem().getDialogueInfo();
 
         dialogueInfo.addEventListener("click", () => {
