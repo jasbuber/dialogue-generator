@@ -1,6 +1,6 @@
 import { DialogueItem } from "./DialogueItem";
 import { ConnectionManager } from "./ConnectionManager";
-import { DialogueInfo } from "./dialogue_document_element/DialogueInfo";
+import { DialogueDocumentElement } from "./dialogue_document_element/DialogueDocumentElement";
 
 export class TreeEventManager {
 
@@ -25,25 +25,14 @@ export class TreeEventManager {
 
         expandSpan.addEventListener("click", (e) => {
 
-            let subdialoguesDiv = item.getDocumentItem().getSubdialoguesElement();
+            let documentItem = item.getDocumentItem();
 
-            if (!item.isSubdialoguesVisible()) {
-                if (subdialoguesDiv.children.length == 0) {
-                    item.getSubdialogues().forEach((s) => {
-                        this.addListeners(s, this.createSubdialogue);
-                        subdialoguesDiv.appendChild(s.getDocumentItem().getDocumentElement());
-                    });
-                }
-                expandSpan.classList.remove("icon-list2");
-                expandSpan.classList.add("icon-shrink2");
-                subdialoguesDiv.classList.remove("hidden");
-                item.setSubdialoguesVisible(true);
+            if (!documentItem.isSubdialoguesVisible()) {
+                this.initializeSubdialogues(item);
+                documentItem.showSubdialogues();
                 this.connectionManager.drawConnections(item);
             } else {
-                subdialoguesDiv.classList.add("hidden");
-                expandSpan.classList.add("icon-list2");
-                expandSpan.classList.remove("icon-shrink2");
-                item.setSubdialoguesVisible(false);
+                documentItem.hideSubdialogue();
                 this.connectionManager.eraseConnections(item);
             }
 
@@ -64,10 +53,27 @@ export class TreeEventManager {
         let createElement: HTMLDivElement = item.getDocumentItem().getAddSubdialogueElement();
 
         createElement.addEventListener("click", (e) => {
+            this.initializeSubdialogues(item);
             let newSubdialogue: DialogueItem = this.createSubdialogue(item);
             item.addSubdialogue(newSubdialogue);
-            this.connectionManager.redraw();
+            this.addListeners(newSubdialogue, this.createSubdialogue);
+            this.connectionManager.drawConnections(item);
         }, false);
+    }
+
+    private initializeSubdialogues(item: DialogueItem) {
+        let subdialoguesDiv = item.getDocumentItem().getSubdialoguesElement();
+
+        if (subdialoguesDiv.children.length == 0) {
+            item.getSubdialogues().forEach((s) => {
+                this.addListeners(s, this.createSubdialogue);
+                subdialoguesDiv.appendChild(s.getDocumentItem().getDocumentElement());
+            });
+        }
+    }
+
+    public clear() {
+        this.connectionManager.clearCanvas();
     }
 
 }

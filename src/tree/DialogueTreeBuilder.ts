@@ -14,6 +14,7 @@ export class DialogueTreeBuilder {
 
     public initializeTree(dialogue: DialogueItem) {
         this.clear();
+        dialogue.getDocumentItem().hideSubdialogue();
         this.appendTree(dialogue);
     }
 
@@ -60,6 +61,7 @@ export class DialogueTreeBuilder {
         while (this.dialogueTree.firstChild) {
             this.dialogueTree.removeChild(this.dialogueTree.firstChild);
         }
+        this.treeEventManager.clear();
     }
 
 }

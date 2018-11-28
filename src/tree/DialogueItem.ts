@@ -5,8 +5,6 @@ export class DialogueItem {
 
     private jsonItem: DialogueTree;
 
-    private subdialoguesVisible = false;
-
     private documentItem: DialogueDocumentElement;
 
     private subdialogues: Array<DialogueItem> = new Array<DialogueItem>();
@@ -32,14 +30,6 @@ export class DialogueItem {
     public addSubdialogue(item: DialogueItem) {
         this.subdialogues.push(item);
         this.documentItem.addSubdialogue(item.getDocumentItem());
-    }
-
-    public isSubdialoguesVisible(): boolean {
-        return this.subdialoguesVisible;
-    }
-
-    public setSubdialoguesVisible(isVisible: boolean) {
-        this.subdialoguesVisible = isVisible;
     }
 
     public getDocumentItem(): DialogueDocumentElement {

@@ -19,6 +19,8 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private dialogueItem: DialogueItem;
 
+    private subdialoguesVisible = false;
+
     constructor(dialogueItem: DialogueItem) {
         super();
 
@@ -54,14 +56,29 @@ export class DialogueDocumentElement extends DialogueElement {
 
     public addSubdialogue(subdialogueElement: DialogueDocumentElement) {
 
-        if (this.expandTreeElement.classList.contains("icon-list2")) {
-            this.expandTreeElement.click();
-        } else if (this.expandTreeElement.classList.contains("hidden")) {
-            this.expandTreeElement.classList.add("icon-list2");
-            this.expandTreeElement.classList.remove("hidden");
-            this.expandTreeElement.click();
+        if (!this.subdialoguesVisible) {
+            this.showSubdialogues();
         }
         this.subdialoguesElement.appendChild(subdialogueElement.getDocumentElement());
+    }
+
+    public showSubdialogues() {
+        this.expandTreeElement.classList.remove("icon-list2");
+        this.expandTreeElement.classList.add("icon-shrink2");
+        this.expandTreeElement.classList.remove("hidden");
+        this.subdialoguesElement.classList.remove("hidden");
+        this.subdialoguesVisible = true;
+    }
+
+    public hideSubdialogue() {
+        this.expandTreeElement.classList.add("icon-list2");
+        this.expandTreeElement.classList.remove("icon-shrink2");
+        this.subdialoguesElement.classList.add("hidden");
+        this.subdialoguesVisible = false;
+    }
+
+    public isSubdialoguesVisible(): boolean {
+        return this.subdialoguesVisible;
     }
 
     public setName(name: string) {

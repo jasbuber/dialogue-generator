@@ -7,6 +7,7 @@ export class ConnectionManager {
     private lines: Map<DialogueItem, Array<SVGLineElement>> = new Map<DialogueItem, Array<SVGLineElement>>();
 
     public drawConnections(dialogueItem: DialogueItem) {
+        this.clear(dialogueItem);
         this.lines.set(dialogueItem, []);
         this.redraw();
     }
@@ -26,8 +27,10 @@ export class ConnectionManager {
 
     private drawLinesForDialogue(dialogueItem: DialogueItem): Array<SVGLineElement> {
 
-        let parentSubdialogues = dialogueItem.getDocumentItem().getDocumentElement().parentElement;
-        if (parentSubdialogues.classList.contains("hidden") || !dialogueItem.isSubdialoguesVisible()) {
+        let documentElement = dialogueItem.getDocumentItem().getDocumentElement();
+        let closestHiddenSubdialogues = documentElement.closest(".subdialogues.hidden");
+        let parent = documentElement.parentElement;
+        if (parent.classList.contains("hidden") || closestHiddenSubdialogues != null) {
             return;
         }
         let dialogueInfoWrapper = dialogueItem.getDocumentItem().getDialogueInfoWrapper();
@@ -105,6 +108,10 @@ export class ConnectionManager {
         let line = this.drawLine(commonX, startY, commonX, endY);
         lines.push(line);
         return lines;
+    }
+
+    public clearCanvas() {
+        this.canvas = null;
     }
 
 }
