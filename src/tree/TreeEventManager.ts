@@ -1,6 +1,5 @@
 import { DialogueItem } from "./DialogueItem";
 import { ConnectionManager } from "./ConnectionManager";
-import { DialogueDocumentElement } from "./dialogue_document_element/DialogueDocumentElement";
 
 export class TreeEventManager {
 

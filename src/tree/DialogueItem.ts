@@ -36,6 +36,14 @@ export class DialogueItem {
         return this.documentItem;
     }
 
+    public getFormattedName() {
+        let name = this.getId();
+        if (!this.isRoot()) {
+            name = this.getOption().slice(0, 60);
+        }
+        return name;
+    }
+
     public getId(): string {
         return this.jsonItem.id;
     }

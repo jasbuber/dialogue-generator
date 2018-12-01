@@ -5,12 +5,10 @@ export abstract class DialogueInfo extends DialogueElement {
 
     protected dialogueInfo: HTMLDivElement;
 
-    protected nameElement: HTMLSpanElement;
+    protected nameElement: HTMLElement;
 
     public constructor(dialogueItem: DialogueItem) {
         super();
-
-        this.dialogueInfo = this.buildDiv(["dialogue-info"]);
     }
 
     public getDocumentElement(): HTMLDivElement {
@@ -19,15 +17,11 @@ export abstract class DialogueInfo extends DialogueElement {
 
     public abstract setName(name: string): void;
 
-    public getNameElement(): HTMLSpanElement {
-        return this.nameElement;
-    }
-
     public getName(): string {
         return this.nameElement.innerText;
     }
 
-    public getDialogueInfo(): HTMLDivElement{
+    public getDialogueInfo(): HTMLDivElement {
         return this.dialogueInfo;
     }
 

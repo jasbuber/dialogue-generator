@@ -1,7 +1,5 @@
-import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { DialogueItem } from "../tree/DialogueItem";
 import { DialogueManager } from "../dialogue_management/DialogueManager";
-import { DialogueTree } from "../tree/DialogueTree";
 
 export class FileService {
 
@@ -9,7 +7,7 @@ export class FileService {
         var reader = new FileReader();
         reader.addEventListener("load", () => {
 
-            let json = JSON.parse(reader.result);
+            let json = JSON.parse(reader.result.toString());
             dialogueManager.initialize(json);
 
         }, false);

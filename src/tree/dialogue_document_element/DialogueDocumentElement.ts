@@ -89,16 +89,8 @@ export class DialogueDocumentElement extends DialogueElement {
         return this.expandTreeElement
     }
 
-    public getNameElement(): HTMLSpanElement {
-        return this.dialogueInfo.getNameElement();
-    }
-
     public getSubdialoguesElement(): HTMLSpanElement {
         return this.subdialoguesElement;
-    }
-
-    public getName(): string {
-        return this.dialogueInfo.getName();
     }
 
     public getAddSubdialogueElement(): HTMLDivElement {
