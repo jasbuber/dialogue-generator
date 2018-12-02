@@ -60,7 +60,7 @@ export class DialogueManager {
 
     private fillDialogueList(dialogueTrees: Array<DialogueTree>) {
         for (var i = 0; i < dialogueTrees.length; i++) {
-            let dialogueItem = new DialogueItem(dialogueTrees[i], true);
+            let dialogueItem = new DialogueItem(dialogueTrees[i]);
             this.dialogues.push(dialogueItem);
             this.npcSelectElement.addOption(dialogueItem);
         }

@@ -1,4 +1,4 @@
-import { DialogueItem } from "../DialogueItem";
+import { DialogueItem } from "../../DialogueItem";
 import { DialogueInfo } from "./DialogueInfo";
 
 export class SlimDialogueInfo extends DialogueInfo {
@@ -31,6 +31,8 @@ export class SlimDialogueInfo extends DialogueInfo {
     private buildMajorIndicators(dialogueItem: DialogueItem): HTMLDivElement {
 
         let indicatorsDiv = this.buildDiv(["minor-indicators"]);
+
+
 
         if (dialogueItem.getActions().includes("end_conversation")) {
             indicatorsDiv.appendChild(this.buildElement(["icon-exit", "icon"], "span"));

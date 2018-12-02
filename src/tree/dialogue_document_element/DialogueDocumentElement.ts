@@ -1,7 +1,9 @@
 import { DialogueItem } from "../DialogueItem";
 import { DialogueElement } from "./DialogueElement";
-import { SlimDialogueInfo } from "./SlimDialogueInfo";
-import { DialogueInfo } from "./DialogueInfo";
+import { SlimDialogueInfo } from "./dialogue_info/SlimDialogueInfo";
+import { EditDialogueInfo } from "./dialogue_info/EditDialogueInfo";
+import { DialogueInfo } from "./dialogue_info/DialogueInfo";
+import { DialogueInfoEventManager } from "./dialogue_info/DialogueInfoEventManager";
 
 export class DialogueDocumentElement extends DialogueElement {
 
@@ -21,11 +23,14 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private subdialoguesVisible = false;
 
+    private dialogueInfoEventManger: DialogueInfoEventManager = new DialogueInfoEventManager();
+
     constructor(dialogueItem: DialogueItem) {
         super();
 
         this.dialogueItem = dialogueItem;
         this.dialogueInfo = new SlimDialogueInfo(dialogueItem);
+        this.dialogueInfoEventManger.addSlimListeners(this);
         let actionsElement = this.buildActionsDiv(dialogueItem);
         this.dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
         this.dialogueInfoWrapper.appendChild(this.dialogueInfo.getDocumentElement());
@@ -99,22 +104,43 @@ export class DialogueDocumentElement extends DialogueElement {
 
     public remove() {
         this.documentElement.remove();
+        this.dialogueItem.getParent().removeSubdialogue(this.dialogueItem);
     }
 
     public getDocumentElement() {
         return this.documentElement;
     }
 
-    public getDialogueInfo(): HTMLDivElement {
-        return this.dialogueInfo.getDialogueInfo();
+    public getDialogueInfo(): DialogueInfo {
+        return this.dialogueInfo;
     }
 
     public getDialogueInfoWrapper(): HTMLDivElement {
         return this.dialogueInfoWrapper;
     }
 
-    public toggle() {
+    public showSlimView() {
+        let newDialogueInfo = new SlimDialogueInfo(this.dialogueItem);
+        this.replaceDialogueInfo(newDialogueInfo);
+        this.dialogueInfoEventManger.addSlimListeners(this);
+    }
 
+    public showEditView() {
+        let newDialogueInfo = new EditDialogueInfo(this.dialogueItem);
+        this.replaceDialogueInfo(newDialogueInfo);
+        this.dialogueInfoEventManger.addEditListeners(this);
+    }
+
+    private replaceDialogueInfo(dialogueInfo: DialogueInfo) {
+
+        let infoElement = this.dialogueInfo.getDocumentElement();
+        infoElement.replaceWith(dialogueInfo.getDocumentElement());
+
+        this.dialogueInfo = dialogueInfo;
+    }
+
+    public getDialogueItem(): DialogueItem {
+        return this.dialogueItem;
     }
 
 }

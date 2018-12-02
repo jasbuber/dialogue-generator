@@ -1,5 +1,5 @@
-import { DialogueItem } from "../DialogueItem";
-import { DialogueElement } from "./DialogueElement";
+import { DialogueItem } from "../../DialogueItem";
+import { DialogueElement } from "../DialogueElement";
 
 export abstract class DialogueInfo extends DialogueElement {
 

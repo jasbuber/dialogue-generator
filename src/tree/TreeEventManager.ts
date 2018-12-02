@@ -14,7 +14,6 @@ export class TreeEventManager {
     public addListeners(item: DialogueItem, createSubdialogue: (dialogueItem: DialogueItem) => DialogueItem): void {
         this.createSubdialogue = createSubdialogue;
         this.addExpandListener(item);
-        this.addEditListener(item);
         this.addCreateListener(item);
     }
 
@@ -36,15 +35,6 @@ export class TreeEventManager {
             }
 
         }, false);
-    }
-
-    private addEditListener(item: DialogueItem): void {
-
-        let dialogueInfo: HTMLDivElement = item.getDocumentItem().getDialogueInfo();
-
-        dialogueInfo.addEventListener("click", () => {
-            item.getDocumentItem().toggle();
-        });
     }
 
     private addCreateListener(item: DialogueItem): void {
@@ -69,6 +59,7 @@ export class TreeEventManager {
                 subdialoguesDiv.appendChild(s.getDocumentItem().getDocumentElement());
             });
         }
+        item.getDocumentItem().showSubdialogues();
     }
 
     public clear() {

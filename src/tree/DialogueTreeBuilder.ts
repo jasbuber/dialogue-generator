@@ -28,7 +28,7 @@ export class DialogueTreeBuilder {
             conditions: new Array<string>()
         }
 
-        let dialogueItem = new DialogueItem(newDialogueTree, true);
+        let dialogueItem = new DialogueItem(newDialogueTree);
         return dialogueItem;
     }
 
@@ -45,7 +45,7 @@ export class DialogueTreeBuilder {
             conditions: new Array<string>()
         }
 
-        return new DialogueItem(newDialogueTree, false);
+        return new DialogueItem(newDialogueTree, dialogueItem);
     }
 
     private appendTree(dialogueItem: DialogueItem): void {

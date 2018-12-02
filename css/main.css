@@ -101,6 +101,7 @@ svg{
     padding: 7px;
     margin: 25px;
     text-align: center;
+    cursor: pointer;
 }
 
 .dialogue-item .dialogue-info .icon{
@@ -111,6 +112,30 @@ svg{
     display: flex;
     justify-content: space-between;
     padding: 0 7px;
+}
+
+.dialogue-item .edit-dialogue-info {
+    cursor: default;
+    padding: 5px 15px;
+}
+
+.dialogue-item .edit-dialogue-info textarea{
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.dialogue-item .edit-dialogue-info .top-actions{
+    justify-content: space-between;
+    display: flex;
+}
+
+.dialogue-item .edit-dialogue-info .icon{
+    cursor: pointer;
+}
+
+.dialogue-item .edit-dialogue-info .icon.deselected{
+    color: #AAA;
 }
 
 .dialogue-tree{
@@ -127,6 +152,10 @@ svg{
 
 .icon-share2, .icon-arrow-left{
     color: #8FC93A;
+}
+
+.icon-bin{
+    color: #ff3860;
 }
 
 .dialogue-item .subdialogues{

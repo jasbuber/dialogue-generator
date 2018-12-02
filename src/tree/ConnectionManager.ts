@@ -40,12 +40,13 @@ export class ConnectionManager {
         let x = dialogueInfoWrapper.offsetLeft + dialogueInfoRect.width - 25;
         let y = dialogueInfoWrapper.offsetTop + dialogueInfoRect.height / 2;
 
-        let line = this.drawLine(x, y, x + 25, y);
-
         let lines = new Array<SVGLineElement>();
-        lines.push(line);
 
-        this.drawSubdialogueLines(dialogueItem).forEach(l => lines.push(l));
+        if (dialogueItem.getSubdialogues().length > 0) {
+            let line = this.drawLine(x, y, x + 25, y);
+            lines.push(line);
+            this.drawSubdialogueLines(dialogueItem).forEach(l => lines.push(l));
+        }
 
         return lines;
     }

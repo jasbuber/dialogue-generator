@@ -9,17 +9,15 @@ export class DialogueItem {
 
     private subdialogues: Array<DialogueItem> = new Array<DialogueItem>();
 
-    private removed: boolean = false;
-
-    private isDialogueRoot: boolean;
-
     private listenersAttached: boolean;
 
-    constructor(jsonItem: DialogueTree, isRoot: boolean) {
-        this.isDialogueRoot = isRoot;
-        this.jsonItem = jsonItem;
-        this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub, false)));
+    private parent: DialogueItem = null;
 
+    constructor(jsonItem: DialogueTree, parent: DialogueItem = null) {
+        this.jsonItem = jsonItem;
+        this.jsonItem.subdialogues.forEach((sub) => this.subdialogues.push(new DialogueItem(sub, this)));
+
+        this.parent = parent;
         this.documentItem = new DialogueDocumentElement(this);
     }
 
@@ -30,6 +28,10 @@ export class DialogueItem {
     public addSubdialogue(item: DialogueItem) {
         this.subdialogues.push(item);
         this.documentItem.addSubdialogue(item.getDocumentItem());
+    }
+
+    public removeSubdialogue(item: DialogueItem) {
+        this.subdialogues = this.subdialogues.filter(s => s != item);
     }
 
     public getDocumentItem(): DialogueDocumentElement {
@@ -75,7 +77,7 @@ export class DialogueItem {
     public setId(id: string) {
         this.jsonItem.id = id;
 
-        if (this.isDialogueRoot) {
+        if (this.isRoot()) {
             this.documentItem.setName(id);
         }
     }
@@ -83,7 +85,7 @@ export class DialogueItem {
     public setDialogue(dialogue: string) {
         this.jsonItem.dialogue = dialogue;
 
-        if (!this.isDialogueRoot) {
+        if (!this.isRoot()) {
             this.documentItem.setName(dialogue);
         }
     }
@@ -94,7 +96,7 @@ export class DialogueItem {
 
     public toJSON(key: any) {
         let children = new Array<DialogueItem>();
-        this.subdialogues.filter((item) => !item.isRemoved()).forEach((sub) => children.push(sub));
+        this.subdialogues.forEach((sub) => children.push(sub));
         return {
             id: this.jsonItem.id,
             dialogue: this.jsonItem.dialogue,
@@ -106,16 +108,13 @@ export class DialogueItem {
     }
 
     public remove() {
-        this.removed = true;
-        this.getDocumentItem().remove();
-    }
-
-    public isRemoved(): boolean {
-        return this.removed;
+        if (this.parent != null) {
+            this.parent.removeSubdialogue(this);
+        }
     }
 
     public isRoot(): boolean {
-        return this.isDialogueRoot;
+        return this.parent == null;
     }
 
     public setHasListeners(listenersAttached: boolean) {
@@ -124,6 +123,10 @@ export class DialogueItem {
 
     public hasListeners(): boolean {
         return this.listenersAttached;
+    }
+
+    public getParent(): DialogueItem {
+        return this.parent;
     }
 
 }
