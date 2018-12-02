@@ -6,6 +6,8 @@ export class ConnectionManager {
 
     private lines: Map<DialogueItem, Array<SVGLineElement>> = new Map<DialogueItem, Array<SVGLineElement>>();
 
+    private currenWidth: number = 0;
+
     public drawConnections(dialogueItem: DialogueItem) {
         this.clear(dialogueItem);
         this.lines.set(dialogueItem, []);
@@ -20,7 +22,8 @@ export class ConnectionManager {
     private initialize() {
         if (this.canvas == null) {
             var SVG = require("svg.js");
-            this.canvas = SVG("dialogue-tree").size('100%', '100%');
+            this.canvas = SVG("dialogue-tree");
+            this.canvas.size('100%', '100%');
             this.canvas.x = 0;
         }
     }
@@ -113,6 +116,23 @@ export class ConnectionManager {
 
     public clearCanvas() {
         this.canvas = null;
+    }
+
+    public validateCanvasSize() {
+        let dialogueTree = <HTMLBodyElement>document.querySelector(".dialogue-tree");
+        let scrollWidth = dialogueTree.scrollWidth;
+
+        if (this.currenWidth == 0) {
+            this.currenWidth = dialogueTree.offsetWidth;
+        }
+
+        if (this.currenWidth < scrollWidth) {
+            let svgCanvas = <SVGElement>dialogueTree.querySelector("svg");
+            let canvasWidth = parseInt(svgCanvas.getAttribute("width")) + 20;
+            svgCanvas.setAttribute("width", canvasWidth + "%");
+        }
+
+        this.currenWidth = dialogueTree.scrollWidth;
     }
 
 }

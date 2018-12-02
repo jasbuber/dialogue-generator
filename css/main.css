@@ -90,7 +90,7 @@ svg{
 }
 
 .dialogue-item .item-actions > div{
-    padding-bottom: 15px;
+    padding: 6px 0;
 }
 
 .dialogue-item .dialogue-info {
@@ -140,6 +140,7 @@ svg{
 
 .dialogue-tree{
     position: relative;
+    overflow: auto;
 }
 
 .icon-lock{
