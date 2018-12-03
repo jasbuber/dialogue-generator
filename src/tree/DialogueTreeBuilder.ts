@@ -10,6 +10,8 @@ export class DialogueTreeBuilder {
 
     constructor() {
         this.treeEventManager = new TreeEventManager();
+
+        this.addScrollListener();
     }
 
     public initializeTree(dialogue: DialogueItem) {
@@ -62,6 +64,54 @@ export class DialogueTreeBuilder {
             this.dialogueTree.removeChild(this.dialogueTree.firstChild);
         }
         this.treeEventManager.clear();
+    }
+
+    public addScrollListener() {
+
+        let isScrolling = false;
+        let isInTree = false;
+        let mousePositionX = 0;
+        let mousePositionY = 0;
+
+        this.dialogueTree.addEventListener('mousemove', (e) => {
+            if (isScrolling) {
+                let newMousePositionX = e.clientX;
+                let newMousePositionY = e.clientY;
+
+                let differenceX = newMousePositionX - mousePositionX;
+                let differenceY = newMousePositionY - mousePositionY;
+
+                document.body.scrollTop = document.body.scrollTop - differenceY;
+                this.dialogueTree.scrollLeft = this.dialogueTree.scrollLeft - differenceX;
+
+                mousePositionX = newMousePositionX;
+                mousePositionY = newMousePositionY;
+            }
+        });
+
+        this.dialogueTree.addEventListener('mousedown', (e) => {
+            if (e.button == 0 && isInTree) {
+                window.getSelection().removeAllRanges();
+                isScrolling = true;
+                mousePositionX = e.clientX;
+                mousePositionY = e.clientY;
+                this.dialogueTree.style.cursor = "grabbing";
+            } else {
+                isScrolling = false;
+            }
+        });
+        document.body.addEventListener('mouseup', () => {
+            isScrolling = false;
+            this.dialogueTree.style.cursor = "grab";
+        });
+
+        this.dialogueTree.addEventListener('mouseleave', function (e) {
+            isInTree = false;
+        });
+
+        this.dialogueTree.addEventListener('mouseenter', function (e) {
+            isInTree = true;
+        });
     }
 
 }
