@@ -73,7 +73,7 @@ export class DialogueTreeBuilder {
         let mousePositionX = 0;
         let mousePositionY = 0;
 
-        this.dialogueTree.addEventListener('mousemove', (e) => {
+        let mouseMoveListener = (e: MouseEvent) => {
             if (isScrolling) {
                 let newMousePositionX = e.clientX;
                 let newMousePositionY = e.clientY;
@@ -87,7 +87,15 @@ export class DialogueTreeBuilder {
                 mousePositionX = newMousePositionX;
                 mousePositionY = newMousePositionY;
             }
-        });
+        }
+
+        let mouseUpListener = () => {
+            isScrolling = false;
+            this.dialogueTree.style.cursor = "grab";
+
+            this.dialogueTree.removeEventListener('mousemove', mouseMoveListener);
+            document.body.removeEventListener('mouseup', mouseUpListener);
+        }
 
         this.dialogueTree.addEventListener('mousedown', (e) => {
             if (e.button == 0 && isInTree) {
@@ -96,22 +104,16 @@ export class DialogueTreeBuilder {
                 mousePositionX = e.clientX;
                 mousePositionY = e.clientY;
                 this.dialogueTree.style.cursor = "grabbing";
+
+                this.dialogueTree.addEventListener('mousemove', mouseMoveListener);
+                document.body.addEventListener('mouseup', mouseUpListener);
             } else {
                 isScrolling = false;
             }
         });
-        document.body.addEventListener('mouseup', () => {
-            isScrolling = false;
-            this.dialogueTree.style.cursor = "grab";
-        });
 
-        this.dialogueTree.addEventListener('mouseleave', function (e) {
-            isInTree = false;
-        });
-
-        this.dialogueTree.addEventListener('mouseenter', function (e) {
-            isInTree = true;
-        });
+        this.dialogueTree.addEventListener('mouseleave', () => isInTree = false);
+        this.dialogueTree.addEventListener('mouseenter', () => isInTree = true);
     }
 
 }
