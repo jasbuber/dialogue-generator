@@ -9,6 +9,8 @@ export class EditDialogueInfo extends DialogueInfo {
 
     private closeElement: HTMLSpanElement;
 
+    private actionElements: Array<HTMLSpanElement> = new Array<HTMLSpanElement>();
+
     constructor(dialogueItem: DialogueItem) {
 
         super(dialogueItem);
@@ -21,8 +23,10 @@ export class EditDialogueInfo extends DialogueInfo {
 
         let optionLabel = this.buildSpan("label", "Dialogue option:");
         this.nameElement = this.buildTextArea(["dialogue-option", "textarea"]);
+        (<HTMLTextAreaElement>this.nameElement).value = dialogueItem.getOption();
         let responseLabel = this.buildSpan("label", "Dialogue response:");
         this.responseElement = this.buildTextArea(["dialogue-response", "textarea"]);
+        this.responseElement.value = dialogueItem.getResponse();
 
         this.dialogueInfo = this.buildDiv(["dialogue-info", "edit-dialogue-info"]);
         this.dialogueInfo.appendChild(topActions);
@@ -48,10 +52,10 @@ export class EditDialogueInfo extends DialogueInfo {
 
         let dialogueActions = this.buildDiv(["dialogue-actions"]);
 
-        let endConversationElement = this.buildAction(dialogueItem, "end_conversation", "icon-exit");
-        let tradeElement = this.buildAction(dialogueItem, "trade", "icon-coin-dollar");
-        let backElement = this.buildAction(dialogueItem, "go_back", "icon-arrow-left");
-        let crossroadsElement = this.buildAction(dialogueItem, "crossroads", "icon-share2");
+        this.actionElements.push(this.buildAction(dialogueItem, "end_conversation", "icon-exit", true));
+        this.actionElements.push(this.buildAction(dialogueItem, "trade", "icon-coin-dollar", true));
+        this.actionElements.push(this.buildAction(dialogueItem, "go_back", "icon-arrow-left", false));
+        this.actionElements.push(this.buildAction(dialogueItem, "crossroads", "icon-share2", false));
 
         let conditionsElement = this.buildElement(["icon-lock", "icon"], "span");
 
@@ -60,17 +64,18 @@ export class EditDialogueInfo extends DialogueInfo {
         }
 
         dialogueActions.appendChild(conditionsElement);
-        dialogueActions.appendChild(endConversationElement);
-        dialogueActions.appendChild(tradeElement);
-        dialogueActions.appendChild(backElement);
-        dialogueActions.appendChild(crossroadsElement);
+        this.actionElements.forEach(a => dialogueActions.appendChild(a));
 
         return dialogueActions;
     }
 
-    private buildAction(dialogueItem: DialogueItem, actionName: string, iconName: string): HTMLSpanElement {
+    private buildAction(dialogueItem: DialogueItem, actionName: string, iconName: string, isFinal: boolean): HTMLSpanElement {
         let actionElement = this.buildElement([iconName, "icon", "deselected"], "span");
+        actionElement.setAttribute("action-name", actionName);
 
+        if (isFinal) {
+            actionElement.classList.add("final-action");
+        }
         if (dialogueItem.getActions().includes(actionName)) {
             actionElement.classList.remove("deselected");
         }
@@ -86,6 +91,32 @@ export class EditDialogueInfo extends DialogueInfo {
         return this.deleteElement;
     }
 
+    public getNameElement(): HTMLTextAreaElement {
+        return <HTMLTextAreaElement>this.nameElement;
+    }
 
+    public getResponseElement(): HTMLTextAreaElement {
+        return this.responseElement;
+    }
+
+    public getActions(): Array<HTMLSpanElement> {
+        return this.actionElements;
+    }
+
+    public deselectAction(action: HTMLSpanElement) {
+        action.classList.add("deselected");
+    }
+
+    public selectAction(action: HTMLSpanElement) {
+        action.classList.remove("deselected");
+    }
+
+    public isActionSelected(actionElement: HTMLSpanElement): boolean {
+        return !actionElement.classList.contains("deselected");
+    }
+
+    public isActionFinal(actionElement: HTMLSpanElement): boolean {
+        return actionElement.classList.contains("final-action");
+    }
 
 }

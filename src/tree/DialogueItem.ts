@@ -129,4 +129,16 @@ export class DialogueItem {
         return this.parent;
     }
 
+    public removeAction(action: string) {
+        this.jsonItem.actions = this.jsonItem.actions.filter(a => a != action);
+    }
+
+    public addAction(action: string) {
+        this.jsonItem.actions.push(action);
+    }
+
+    public addCondition(condition: string) {
+        this.jsonItem.conditions.push(condition);
+    }
+
 }

@@ -83,14 +83,13 @@ export class TreeEventManager {
 
         dialogueInfo.addEventListener("click", () => {
             dialogueElement.showEditView();
-            this.addEditListeners(dialogueElement);
+            this.addCloseListener(dialogueElement);
+            this.addDeleteSubdialogueListener(dialogueElement);
+            this.addOptionChangedListener(dialogueElement);
+            this.addResponseChangedListener(dialogueElement);
+            this.addActionsListener(dialogueElement);
             this.connectionManager.redraw();
         });
-    }
-
-    private addEditListeners(dialogueElement: DialogueDocumentElement) {
-        this.addCloseListener(dialogueElement);
-        this.addDeleteSubdialogueListener(dialogueElement);
     }
 
     private addCloseListener(dialogueElement: DialogueDocumentElement) {
@@ -136,6 +135,68 @@ export class TreeEventManager {
             deleteModal.classList.remove("is-active");
         }, false);
 
+    }
+
+    public addOptionChangedListener(dialogueElement: DialogueDocumentElement) {
+
+        let editDialogueInfo = <EditDialogueInfo>dialogueElement.getDialogueInfo();
+
+        editDialogueInfo.getNameElement().addEventListener("change", (e) => {
+            let updatedOption = (<HTMLTextAreaElement>e.target).value;
+            dialogueElement.getDialogueItem().setDialogue(updatedOption);
+
+            if (dialogueElement.getDialogueItem().getParent().getParent() == null) {
+                let dialogueSelect = <HTMLSelectElement>document.querySelector(".dialogue-list");
+                let selectedIndex = dialogueSelect.selectedIndex;
+                dialogueSelect.options[selectedIndex].text = dialogueElement.getDialogueItem().getFormattedName();
+                dialogueSelect.options[selectedIndex].value = dialogueElement.getDialogueItem().getFormattedName();
+            }
+
+        }, false);
+    }
+
+    public addResponseChangedListener(dialogueElement: DialogueDocumentElement) {
+
+        let editDialogueInfo = <EditDialogueInfo>dialogueElement.getDialogueInfo();
+
+        editDialogueInfo.getResponseElement().addEventListener("change", (e) => {
+            let updatedResponse = (<HTMLTextAreaElement>e.target).value;
+            dialogueElement.getDialogueItem().setResponse(updatedResponse);
+        }, false);
+    }
+
+    public addActionsListener(dialogueElement: DialogueDocumentElement) {
+
+        let editDialogueInfo = <EditDialogueInfo>dialogueElement.getDialogueInfo();
+
+        editDialogueInfo.getActions().forEach(action => {
+            action.addEventListener("click", () => {
+                if (editDialogueInfo.isActionSelected(action)) {
+                    this.removeAction(dialogueElement, action);
+                } else {
+                    if (editDialogueInfo.isActionFinal(action)) {
+                        editDialogueInfo.getActions().forEach(a => {
+                            this.removeAction(dialogueElement, a);
+                        });
+                    } else {
+                        editDialogueInfo.getActions().filter(a => editDialogueInfo.isActionFinal(a)).forEach(a => {
+                            this.removeAction(dialogueElement, a);
+                        });
+                    }
+                    this.addAction(dialogueElement, action);
+                }
+            }, false);
+        });
+    }
+
+    private removeAction(dialogueElement: DialogueDocumentElement, action: HTMLSpanElement) {
+        dialogueElement.getDialogueItem().removeAction(action.getAttribute("action-name"));
+        (<EditDialogueInfo>dialogueElement.getDialogueInfo()).deselectAction(action);
+    }
+
+    private addAction(dialogueElement: DialogueDocumentElement, action: HTMLSpanElement) {
+        dialogueElement.getDialogueItem().addAction(action.getAttribute("action-name"));
+        (<EditDialogueInfo>dialogueElement.getDialogueInfo()).selectAction(action);
     }
 
 }
