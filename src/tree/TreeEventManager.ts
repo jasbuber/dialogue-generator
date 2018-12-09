@@ -88,6 +88,7 @@ export class TreeEventManager {
             this.addOptionChangedListener(dialogueElement);
             this.addResponseChangedListener(dialogueElement);
             this.addActionsListener(dialogueElement);
+            this.addConditionsListener(dialogueElement);
             this.connectionManager.redraw();
         });
     }
@@ -197,6 +198,16 @@ export class TreeEventManager {
     private addAction(dialogueElement: DialogueDocumentElement, action: HTMLSpanElement) {
         dialogueElement.getDialogueItem().addAction(action.getAttribute("action-name"));
         (<EditDialogueInfo>dialogueElement.getDialogueInfo()).selectAction(action);
+    }
+
+    public addConditionsListener(dialogueElement: DialogueDocumentElement) {
+        let editDialogueInfo = <EditDialogueInfo>dialogueElement.getDialogueInfo();
+
+        let config = { attributes: true, childList: true, subtree: true };
+        let callback = () => this.connectionManager.redraw();
+        var observer = new MutationObserver(callback);
+
+        observer.observe(editDialogueInfo.getConditionsElement(), config);
     }
 
 }

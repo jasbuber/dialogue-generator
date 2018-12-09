@@ -1,5 +1,6 @@
 import { DialogueInfo } from "./DialogueInfo";
 import { DialogueItem } from "../../DialogueItem";
+import { ConditionsElement } from "./ConditionsElement";
 
 export class EditDialogueInfo extends DialogueInfo {
 
@@ -11,15 +12,13 @@ export class EditDialogueInfo extends DialogueInfo {
 
     private actionElements: Array<HTMLSpanElement> = new Array<HTMLSpanElement>();
 
+    private conditionElement: HTMLSpanElement;
+
+    private conditionsPanel: ConditionsElement;
+
     constructor(dialogueItem: DialogueItem) {
 
         super(dialogueItem);
-
-        let topActions = this.buildDiv(["top-actions"]);
-        this.closeElement = <HTMLSpanElement>this.buildElement(["icon", "icon-cross"], "span");
-        this.deleteElement = <HTMLSpanElement>this.buildElement(["icon", "icon-bin", "is-danger"], "span");
-        topActions.appendChild(this.deleteElement);
-        topActions.appendChild(this.closeElement);
 
         let optionLabel = this.buildSpan("label", "Dialogue option:");
         this.nameElement = this.buildTextArea(["dialogue-option", "textarea"]);
@@ -28,14 +27,26 @@ export class EditDialogueInfo extends DialogueInfo {
         this.responseElement = this.buildTextArea(["dialogue-response", "textarea"]);
         this.responseElement.value = dialogueItem.getResponse();
 
+        this.conditionsPanel = new ConditionsElement(dialogueItem);
+
         this.dialogueInfo = this.buildDiv(["dialogue-info", "edit-dialogue-info"]);
-        this.dialogueInfo.appendChild(topActions);
+        this.dialogueInfo.appendChild(this.buildTopActions());
         this.dialogueInfo.appendChild(optionLabel);
         this.dialogueInfo.appendChild(this.nameElement);
         this.dialogueInfo.appendChild(responseLabel);
         this.dialogueInfo.appendChild(this.responseElement);
-
         this.dialogueInfo.appendChild(this.buildActionsDiv(dialogueItem));
+        this.dialogueInfo.appendChild(this.conditionsPanel.getConditionsElement());
+    }
+
+    private buildTopActions(): HTMLDivElement {
+        let topActions = this.buildDiv(["top-actions"]);
+        this.closeElement = <HTMLSpanElement>this.buildElement(["icon", "icon-cross"], "span");
+        this.deleteElement = <HTMLSpanElement>this.buildElement(["icon", "icon-bin", "is-danger"], "span");
+        topActions.appendChild(this.deleteElement);
+        topActions.appendChild(this.closeElement);
+
+        return topActions;
     }
 
     public setName(name: string) {
@@ -57,14 +68,14 @@ export class EditDialogueInfo extends DialogueInfo {
         this.actionElements.push(this.buildAction(dialogueItem, "go_back", "icon-arrow-left", false));
         this.actionElements.push(this.buildAction(dialogueItem, "crossroads", "icon-share2", false));
 
-        let conditionsElement = this.buildElement(["icon-lock", "icon"], "span");
+        this.conditionElement = this.buildElement(["icon-lock", "icon", "toggle-conditions"], "span");
 
-        if (dialogueItem.getConditions.length == 0) {
-            conditionsElement.classList.add("deselected");
-        }
+        this.updateConditionsState(dialogueItem);
 
-        dialogueActions.appendChild(conditionsElement);
+        dialogueActions.appendChild(this.conditionElement);
         this.actionElements.forEach(a => dialogueActions.appendChild(a));
+
+        this.conditionElement.addEventListener("click", () => this.conditionsPanel.toggle());
 
         return dialogueActions;
     }
@@ -117,6 +128,18 @@ export class EditDialogueInfo extends DialogueInfo {
 
     public isActionFinal(actionElement: HTMLSpanElement): boolean {
         return actionElement.classList.contains("final-action");
+    }
+
+    public getConditionsElement(): HTMLSpanElement {
+        return this.conditionsPanel.getConditionsElement();
+    }
+
+    public updateConditionsState(dialogueItem: DialogueItem) {
+        if (dialogueItem.getConditions().length == 0) {
+            this.conditionElement.classList.add("deselected");
+        } else {
+            this.conditionElement.classList.remove("deselected");
+        }
     }
 
 }

@@ -141,4 +141,8 @@ export class DialogueItem {
         this.jsonItem.conditions.push(condition);
     }
 
+    public removeCondition(condition: string) {
+        this.jsonItem.conditions = this.jsonItem.conditions.filter(c => c != condition);
+    }
+
 }
