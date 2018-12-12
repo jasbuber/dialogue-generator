@@ -1,6 +1,9 @@
 import { DialogueItem } from "../../DialogueItem";
 import { DialogueElement } from "../DialogueElement";
 import { EditDialogueInfo } from "./EditDialogueInfo";
+import { AutoCompleteService } from "../AutoCompleteService";
+
+import conditions from "../../../resources/conditions.json";
 
 export class ConditionsElement extends DialogueElement {
 
@@ -65,6 +68,7 @@ export class ConditionsElement extends DialogueElement {
         let newConditionTag = <HTMLInputElement>this.buildElement(["new-condition-value", "tag"], "input");
         newConditionTag.type = "text";
         newConditionTag.placeholder = "eg. charisma > 5";
+        newConditionTag.autocomplete = "false";
         this.conditionsElement.insertBefore(newConditionTag, this.addConditionTag);
 
         newConditionTag.focus();
@@ -72,15 +76,25 @@ export class ConditionsElement extends DialogueElement {
         newConditionTag.addEventListener("blur", () => {
 
             let newConditionValue = newConditionTag.value.trim();
+
             if (newConditionValue.length == 0) {
                 newConditionTag.remove();
             } else {
+
+                if (!this.isConditionValid(newConditionValue)) {
+                    newConditionTag.classList.add("is-danger");
+                    newConditionTag.focus();
+                    return;
+                }
+
                 dialogueItem.addCondition(newConditionValue);
                 let editDialogueInfo = <EditDialogueInfo>dialogueItem.getDocumentItem().getDialogueInfo();
                 editDialogueInfo.updateConditionsState(dialogueItem);
                 newConditionTag.replaceWith(this.buildConditionTag(dialogueItem, newConditionValue));
             }
         });
+
+        new AutoCompleteService().autocomplete(newConditionTag, conditions.values);
     }
 
     public toggle() {
@@ -89,6 +103,16 @@ export class ConditionsElement extends DialogueElement {
         } else {
             this.conditionsElement.classList.add("hidden");
         }
+    }
+
+    private isConditionValid(condition: string) {
+        let regex = /^[a-z]{1,}\s{1}[<=>]{1,2}\s{1}\d{1,}$/i.exec(condition);
+
+        if (regex == null) {
+            return false;
+        }
+
+        return conditions.values.includes(condition.split(' ')[0]);
     }
 
 

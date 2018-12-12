@@ -1,0 +1,33 @@
+[
+	{
+		"id": "john-smith-1",
+		"dialogue": "What do you sell ?",
+		"response": "I have plenty of weapons. Take a look.",
+		"conditions": [
+			"charisma > 5"
+		],
+		"actions": [
+			"end_conversation"
+		],
+		"subdialogues": [
+			{
+				"id": "john-smith-1",
+				"dialogue": "Show me what you got.",
+				"response": ".",
+				"conditions": [],
+				"actions": [
+					"end_conversation"
+				],
+				"subdialogues": []
+			}
+		]
+	},
+	{
+		"id": "james-elliot-1",
+		"dialogue": "Who are you ?",
+		"response": "I am a completely insignificant person.",
+		"conditions": [],
+		"actions": [],
+		"subdialogues": []
+	}
+]

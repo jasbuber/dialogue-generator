@@ -161,6 +161,12 @@ svg{
     margin-bottom: 0;
 }
 
+.dialogue-item .edit-dialogue-info .dialogue-conditions .new-condition-value.is-danger{
+    background-color: inherit;
+    color: #ff3860;
+    border: solid 1px #ff3860;
+}
+
 .dialogue-tree{
     position: relative;
     overflow-x: auto;
