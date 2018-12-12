@@ -198,3 +198,38 @@ svg{
 .dialogue-item .subdialogues{
     display: inline-block;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltip-text {
+  width: auto;
+  background-color: #3273dc;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  opacity: 0.9;
+  min-width: 80px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 140%;
+  left: 50%;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #3273dc transparent transparent transparent;
+}

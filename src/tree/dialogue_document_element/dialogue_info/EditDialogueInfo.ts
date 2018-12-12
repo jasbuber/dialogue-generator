@@ -1,6 +1,7 @@
 import { DialogueInfo } from "./DialogueInfo";
 import { DialogueItem } from "../../DialogueItem";
 import { ConditionsElement } from "./ConditionsElement";
+import { Tooltip } from "../../../Tooltip";
 
 export class EditDialogueInfo extends DialogueInfo {
 
@@ -83,6 +84,7 @@ export class EditDialogueInfo extends DialogueInfo {
     private buildAction(dialogueItem: DialogueItem, actionName: string, iconName: string, isFinal: boolean): HTMLSpanElement {
         let actionElement = this.buildElement([iconName, "icon", "deselected"], "span");
         actionElement.setAttribute("action-name", actionName);
+        new Tooltip().tooltip(actionElement, actionName);
 
         if (isFinal) {
             actionElement.classList.add("final-action");
