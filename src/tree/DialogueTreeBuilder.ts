@@ -8,6 +8,8 @@ export class DialogueTreeBuilder {
 
     private dialogueTree = <HTMLDivElement>document.getElementsByClassName("dialogue-tree")[0];
 
+    private dialoguesCreated: number = 1;
+
     constructor() {
         this.treeEventManager = new TreeEventManager();
 
@@ -22,7 +24,7 @@ export class DialogueTreeBuilder {
 
     public createDialogueItem(): DialogueItem {
         let newDialogueTree: DialogueTree = {
-            id: "new-dialogue-id",
+            id: "new-dialogue-id-" + this.dialoguesCreated++,
             dialogue: "",
             response: "Generic greeting",
             subdialogues: new Array<DialogueTree>(),
@@ -34,13 +36,11 @@ export class DialogueTreeBuilder {
         return dialogueItem;
     }
 
-    private createSubdialogueItem(dialogueItem: DialogueItem): DialogueItem {
+    public createSubdialogueItem(dialogueItem: DialogueItem): DialogueItem {
 
-        let parentId: string = dialogueItem.getId();
-        let childId = parentId + "-" + (dialogueItem.getSubdialogues().length + 1);
         let newDialogueTree: DialogueTree = {
-            id: childId,
-            dialogue: "new-dialogue",
+            id: DialogueTreeBuilder.getValidId(dialogueItem),
+            dialogue: DialogueTreeBuilder.getValidOption(dialogueItem),
             response: "",
             subdialogues: new Array<DialogueTree>(),
             actions: new Array<string>(),
@@ -48,6 +48,27 @@ export class DialogueTreeBuilder {
         }
 
         return new DialogueItem(newDialogueTree, dialogueItem);
+    }
+
+    public static getValidId(dialogueItem: DialogueItem): string {
+        let parentId: string = dialogueItem.getId();
+        let childNr = dialogueItem.getSubdialogues().length + 1;
+        let childId = parentId + "-" + childNr;
+
+        while (dialogueItem.getSubdialogues().find(s => s.getId() == childId) != undefined) {
+            childId = parentId + "-" + ++childNr;
+        }
+        return childId;
+    }
+
+    public static getValidOption(dialogueItem: DialogueItem): string {
+        let childNr = 1;
+        let childId = "new-dialogue-" + childNr;
+
+        while (dialogueItem.getSubdialogues().find(s => s.getOption() == childId) != undefined) {
+            childId = "new-dialogue-" + ++childNr;
+        }
+        return childId;
     }
 
     private appendTree(dialogueItem: DialogueItem): void {

@@ -28,6 +28,7 @@ export class DialogueManager {
         this.addIdChangedListener();
         this.addGreetingChangedListener();
         this.addDeleteDialogueListener();
+        this.addCreateSubdialogueListener();
     }
 
     public initialize(dialogueTrees: Array<DialogueTree>): void {
@@ -80,6 +81,16 @@ export class DialogueManager {
             this.selectDialogue(newDialogue);
             this.npcSelectElement.selectOption(newDialogue);
         }, false);
+    }
+
+    public addCreateSubdialogueListener() {
+        document.querySelector(".dialogue-tree-controls .add-dialogue").addEventListener("click", () => {
+            let newDialogue = this.dialogueTreeBuilder.createSubdialogueItem(this.selectedDialogue);
+            this.selectedDialogue.addSubdialogue(newDialogue);
+            this.dialogueSelectElement.addOption(newDialogue);
+            this.dialogueSelectElement.selectOption(newDialogue);
+            this.dialogueTreeBuilder.initializeTree(newDialogue);
+        })
     }
 
     public addDeleteDialogueListener() {

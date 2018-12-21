@@ -70,7 +70,7 @@ export class TreeEventManager {
     }
 
     public clear() {
-        this.connectionManager.clearCanvas();
+        this.connectionManager.clear();
     }
 
     private addSlimListeners(dialogueItem: DialogueItem) {

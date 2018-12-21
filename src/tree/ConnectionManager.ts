@@ -9,14 +9,14 @@ export class ConnectionManager {
     private currenWidth: number = 0;
 
     public drawConnections(dialogueItem: DialogueItem) {
-        this.clear(dialogueItem);
+        this.clearItem(dialogueItem);
         this.lines.set(dialogueItem, []);
         this.redraw();
     }
 
     public eraseConnections(dialogueItem: DialogueItem) {
         this.redraw();
-        this.clear(dialogueItem);
+        this.clearItem(dialogueItem);
     }
 
     private initialize() {
@@ -54,7 +54,7 @@ export class ConnectionManager {
         return lines;
     }
 
-    private clear(dialogueItem: DialogueItem) {
+    private clearItem(dialogueItem: DialogueItem) {
 
         let dialogueLines = this.lines.get(dialogueItem);
 
@@ -68,8 +68,9 @@ export class ConnectionManager {
 
     public redraw() {
         let newLines = new Map<DialogueItem, Array<SVGLineElement>>();
+
         this.lines.forEach((value, key, map) => {
-            this.clear(key);
+            this.clearItem(key);
             value = this.drawLinesForDialogue(key);
             newLines.set(key, value);
         });
@@ -114,8 +115,9 @@ export class ConnectionManager {
         return lines;
     }
 
-    public clearCanvas() {
+    public clear() {
         this.canvas = null;
+        this.lines.clear();
     }
 
     public validateCanvasSize() {
