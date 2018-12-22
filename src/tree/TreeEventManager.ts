@@ -33,6 +33,10 @@ export class TreeEventManager {
             if (!documentItem.isSubdialoguesVisible()) {
                 this.initializeSubdialogues(item);
                 documentItem.showSubdialogues();
+                item.getSubdialogues().forEach(s => {
+                    s.getDocumentItem().hideSubdialogue();
+                    this.connectionManager.eraseConnections(s);
+                });
                 this.connectionManager.drawConnections(item);
                 this.connectionManager.validateCanvasSize();
             } else {
@@ -150,7 +154,7 @@ export class TreeEventManager {
                 let dialogueSelect = <HTMLSelectElement>document.querySelector(".dialogue-list");
                 let selectedIndex = dialogueSelect.selectedIndex;
                 dialogueSelect.options[selectedIndex].text = dialogueElement.getDialogueItem().getFormattedName();
-                dialogueSelect.options[selectedIndex].value = dialogueElement.getDialogueItem().getFormattedName();
+                dialogueSelect.options[selectedIndex].value = dialogueElement.getDialogueItem().getId();
             }
 
         }, false);
