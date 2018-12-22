@@ -1,6 +1,12 @@
 {
     "values": [
         "charisma",
-        "strength"
+        "strength",
+        "intelligence",
+        "agility",
+        "stealth",
+        "lockpicking",
+        "speech",
+        "pickpocketing"
     ]
 }
