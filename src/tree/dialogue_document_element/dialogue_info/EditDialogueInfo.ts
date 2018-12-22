@@ -70,6 +70,7 @@ export class EditDialogueInfo extends DialogueInfo {
         this.actionElements.push(this.buildAction(dialogueItem, "crossroads", "icon-share2", false));
 
         this.conditionElement = this.buildElement(["icon-lock", "icon", "toggle-conditions"], "span");
+        new Tooltip().tooltip(this.conditionElement, "edit conditions");
 
         this.updateConditionsState(dialogueItem);
 

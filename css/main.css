@@ -219,7 +219,7 @@ svg{
   background-color: #3273dc;
   color: #fff;
   text-align: center;
-  padding: 8px 12px;
+  padding: 4px 12px 8px 12px;
   border-radius: 6px;
   opacity: 0.9;
   min-width: 80px;
@@ -229,6 +229,7 @@ svg{
   z-index: 1;
   bottom: 140%;
   left: 50%;
+  text-transform:capitalize;
 }
 
 /* Tooltip arrow */
