@@ -20,4 +20,4 @@ Every dialogue tree consists of a tree of items, representing a dialogue option 
 * [watchify](https://github.com/browserify/watchify)
 
 # Getting Started
-Start a web server and open index.html. Possible actions, conditions and an example dialogues json file are in src/resources folder.
+Build the typescript application and copy files to your chosen web server. Start a web server and open index.html. Possible actions, conditions and an example dialogues json file are in src/resources folder.
