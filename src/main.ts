@@ -1,5 +1,6 @@
 import { FileService } from "./io/FileService";
 import { DialogueManager } from "./dialogue_management/DialogueManager";
+import exampleDialogues from "./resources/example_dialogues.json";
 
 var fileService: FileService;
 
@@ -24,5 +25,7 @@ window.onload = function () {
 
     fileService = new FileService();
     dialogueManager = new DialogueManager();
+
+    dialogueManager.initialize(exampleDialogues);
 }
 
