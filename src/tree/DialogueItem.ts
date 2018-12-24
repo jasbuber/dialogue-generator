@@ -3,6 +3,8 @@ import { DialogueDocumentElement } from "./dialogue_document_element/DialogueDoc
 
 export class DialogueItem {
 
+    private FINAL_ACTIONS = ["end_conversation", "go_back", "trade"];
+
     private jsonItem: DialogueTree;
 
     private documentItem: DialogueDocumentElement;
@@ -143,6 +145,10 @@ export class DialogueItem {
 
     public removeCondition(condition: string) {
         this.jsonItem.conditions = this.jsonItem.conditions.filter(c => c != condition);
+    }
+
+    public isFinal(): boolean {
+        return this.getActions().filter(a => this.FINAL_ACTIONS.includes(a)).length > 0;
     }
 
 }

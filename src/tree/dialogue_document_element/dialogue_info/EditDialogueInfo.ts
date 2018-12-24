@@ -66,7 +66,7 @@ export class EditDialogueInfo extends DialogueInfo {
 
         this.actionElements.push(this.buildAction(dialogueItem, "end_conversation", "icon-exit", true));
         this.actionElements.push(this.buildAction(dialogueItem, "trade", "icon-coin-dollar", true));
-        this.actionElements.push(this.buildAction(dialogueItem, "go_back", "icon-arrow-left", false));
+        this.actionElements.push(this.buildAction(dialogueItem, "go_back", "icon-arrow-left", true));
         this.actionElements.push(this.buildAction(dialogueItem, "crossroads", "icon-share2", false));
 
         this.conditionElement = this.buildElement(["icon-lock", "icon", "toggle-conditions"], "span");

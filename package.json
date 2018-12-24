@@ -1,6 +1,6 @@
 {
   "name": "dialogue-generator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "devDependencies": {
     "@types/node": "^8.0.47",
     "concurrently": "^4.1.0",

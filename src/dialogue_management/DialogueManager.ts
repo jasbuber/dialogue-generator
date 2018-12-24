@@ -3,6 +3,7 @@ import { DialogueTree } from "../tree/DialogueTree";
 import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { FileService } from "../io/FileService"
 import { DialogueItemSelect } from "./DialogueItemSelect";
+import { ErrorDisplayManager } from "../ErrorDisplayManager";
 
 export class DialogueManager {
 
@@ -136,8 +137,13 @@ export class DialogueManager {
     public addIdChangedListener() {
         this.npcIdInput.addEventListener("change", (e) => {
             let updatedId = (<HTMLInputElement>e.target).value;
+
+            if (!this.validateId(updatedId)) {
+                return;
+            }
             this.npcSelectElement.updateSelectedOption(updatedId);
             this.selectedDialogue.setId(updatedId);
+            ErrorDisplayManager.clearErrors(this.npcIdInput);
         }, false);
     }
 
@@ -148,6 +154,16 @@ export class DialogueManager {
         }, false);
     }
 
+    private validateId(id: string): boolean {
 
+        if (id.trim().length == 0) {
+            ErrorDisplayManager.displayError(this.npcIdInput, ErrorDisplayManager.INPUT_EMPTY_ERROR);
+            return false;
+        } else if (this.dialogues.filter(d => d.getId() == id).length > 0) {
+            ErrorDisplayManager.displayError(this.npcIdInput, ErrorDisplayManager.INPUT_ID_EXIST_ERROR);
+            return false;
+        }
+        return true;
+    }
 
 }

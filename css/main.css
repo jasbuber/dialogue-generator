@@ -22,7 +22,6 @@ body>div {
 
 .input {
     min-width: 220px;
-    margin-bottom: 15px;
 }
 
 .wide {
@@ -73,6 +72,15 @@ svg{
     display: inline-block;
 }
 
+.npc-dialogue .show-delete-modal{ 
+    margin-top: 15px;
+}
+
+.help.bottom-error{
+    position: absolute;
+    bottom: 0px;
+    left : 20px;
+}
 .dialogue-tree-controls{
     margin-top: 15px;
     margin-bottom: 30px;

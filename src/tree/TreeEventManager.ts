@@ -2,6 +2,7 @@ import { DialogueItem } from "./DialogueItem";
 import { ConnectionManager } from "./ConnectionManager";
 import { DialogueDocumentElement } from "./dialogue_document_element/DialogueDocumentElement";
 import { EditDialogueInfo } from "./dialogue_document_element/dialogue_info/EditDialogueInfo"
+import { ErrorDisplayManager } from "../ErrorDisplayManager";
 
 export class TreeEventManager {
 
@@ -52,6 +53,13 @@ export class TreeEventManager {
         let createElement: HTMLDivElement = item.getDocumentItem().getAddSubdialogueElement();
 
         createElement.addEventListener("click", (e) => {
+
+            if (item.isFinal()) {
+                let dialogue = item.getDocumentItem().getDialogueInfoWrapper();
+                ErrorDisplayManager.displayInnerError(dialogue, ErrorDisplayManager.FINAL_ITEM_ERROR, 4000);
+                return;
+            }
+
             this.initializeSubdialogues(item);
             let newSubdialogue: DialogueItem = this.createSubdialogue(item);
             item.addSubdialogue(newSubdialogue);
@@ -148,6 +156,12 @@ export class TreeEventManager {
 
         editDialogueInfo.getNameElement().addEventListener("change", (e) => {
             let updatedOption = (<HTMLTextAreaElement>e.target).value;
+
+            if (updatedOption.trim().length == 0) {
+                ErrorDisplayManager.displayError(editDialogueInfo.getNameElement(), ErrorDisplayManager.INPUT_EMPTY_ERROR);
+                return;
+            }
+            ErrorDisplayManager.clearErrors(editDialogueInfo.getNameElement());
             dialogueElement.getDialogueItem().setDialogue(updatedOption);
 
             if (dialogueElement.getDialogueItem().getParent().getParent() == null) {
@@ -179,6 +193,13 @@ export class TreeEventManager {
                 if (editDialogueInfo.isActionSelected(action)) {
                     this.removeAction(dialogueElement, action);
                 } else {
+                    if (dialogueElement.getDialogueItem().getSubdialogues().length != 0 && editDialogueInfo.isActionFinal(action)) {
+                        let dialogue = dialogueElement.getDialogueInfoWrapper();
+                        ErrorDisplayManager.displayInnerError(dialogue, ErrorDisplayManager.ITEM_HAS_CHILDREN_ERROR, 4000);
+                        return;
+                    }
+                    ErrorDisplayManager.clearErrors(editDialogueInfo.getConditionsElement());
+
                     if (editDialogueInfo.isActionFinal(action)) {
                         editDialogueInfo.getActions().forEach(a => {
                             this.removeAction(dialogueElement, a);
