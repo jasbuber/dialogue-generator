@@ -84,10 +84,12 @@ export class DialogueManager {
         exportAction.addEventListener("click", () => {
             let errors = this.treeValidator.validateTree(this.dialogues);
             this.validationErrorElement.displayErrors(errors);
-            this.showErrorsElement.classList.add("hidden");
             if (errors.length > 0) {
                 this.showErrorsElement.querySelector("span").innerText = errors.length.toString();
                 this.showErrorsElement.classList.remove("hidden");
+            } else {
+                this.validationErrorElement.hide();
+                this.showErrorsElement.classList.add("hidden");
             }
 
             new FileService().saveJson(this.dialogues);
