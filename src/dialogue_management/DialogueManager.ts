@@ -4,6 +4,8 @@ import { DialogueTreeBuilder } from "../tree/DialogueTreeBuilder";
 import { FileService } from "../io/FileService"
 import { DialogueItemSelect } from "./DialogueItemSelect";
 import { ErrorDisplayManager } from "../ErrorDisplayManager";
+import { TreeValidator } from "./TreeValidator";
+import { ValidationErrorElement } from "./ValidationErrorElement";
 
 export class DialogueManager {
 
@@ -23,6 +25,12 @@ export class DialogueManager {
 
     private selectedDialogue: DialogueItem;
 
+    private treeValidator = new TreeValidator();
+
+    private validationErrorElement: ValidationErrorElement;
+
+    private showErrorsElement: HTMLSpanElement = document.querySelector(".show-validation-errors");
+
     constructor() {
         this.addExportListener();
         this.addCreateDialogueListener();
@@ -30,6 +38,9 @@ export class DialogueManager {
         this.addGreetingChangedListener();
         this.addDeleteDialogueListener();
         this.addCreateSubdialogueListener();
+        this.addToggleValidationErrorsListener();
+
+        this.validationErrorElement = new ValidationErrorElement();
     }
 
     public initialize(dialogueTrees: Array<DialogueTree>): void {
@@ -70,7 +81,17 @@ export class DialogueManager {
 
     private addExportListener() {
         let exportAction = <HTMLInputElement>document.getElementsByClassName("export-action")[0];
-        exportAction.addEventListener("click", () => new FileService().saveJson(this.dialogues), false);
+        exportAction.addEventListener("click", () => {
+            let errors = this.treeValidator.validateTree(this.dialogues);
+            this.validationErrorElement.displayErrors(errors);
+            this.showErrorsElement.classList.add("hidden");
+            if (errors.length > 0) {
+                this.showErrorsElement.querySelector("span").innerText = errors.length.toString();
+                this.showErrorsElement.classList.remove("hidden");
+            }
+
+            new FileService().saveJson(this.dialogues);
+        }, false);
     }
 
     public addCreateDialogueListener() {
@@ -164,6 +185,17 @@ export class DialogueManager {
             return false;
         }
         return true;
+    }
+
+    public addToggleValidationErrorsListener() {
+        this.showErrorsElement.addEventListener("click", (e) => {
+
+            if (this.validationErrorElement.isVisible()) {
+                this.validationErrorElement.hide();
+            } else {
+                this.validationErrorElement.show();
+            }
+        }, false);
     }
 
 }

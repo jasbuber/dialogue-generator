@@ -43,6 +43,28 @@ body>div {
 .file-loader-wrapper {
     display: inline-block;
     vertical-align: top;
+    position: relative;
+}
+
+.file-loader-wrapper .tree-validation-errors{
+    position: absolute;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    height: 136px;
+    resize: both;
+    overflow: scroll;
+    background-color: #EEE;
+    font-size: 13px;
+    padding: 5px 10px;
+    z-index: 999;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+
+.file-loader-wrapper .tree-validation-errors div{
+    word-wrap: none;
+    white-space: nowrap;
 }
 
 .file-name {
@@ -93,6 +115,25 @@ svg{
 .dialogue-tree-controls .add-dialogue{
     color: #23d160;
     border: none;
+}
+
+.show-validation-errors{
+    border: 1px solid #ff3860;
+}
+
+.show-validation-errors:hover{
+    border: 1px solid #ff3860;
+}
+
+.show-validation-errors:hover span, .show-validation-errors:before{
+    color: #ff3860;
+}
+
+.show-validation-errors span{
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
 
 .dialogue-item{
@@ -208,7 +249,7 @@ svg{
     color: #8FC93A;
 }
 
-.icon-bin{
+.icon-bin, .icon-bug{
     color: #ff3860;
 }
 

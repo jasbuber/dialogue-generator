@@ -4,6 +4,9 @@ export class ErrorDisplayManager {
     public static INPUT_ID_EXIST_ERROR = "Dialogue with this id already exist.";
     public static FINAL_ITEM_ERROR = "Dialogues with final actions can't have subdialogues.";
     public static ITEM_HAS_CHILDREN_ERROR = "Dialogues with subdialogues can't be marked as final.";
+    public static ITEM_DEAD_END_ERROR = "Dialogue is a dead end.";
+
+    public static NO_CROSSROADS_ERROR = "Dialogue has no crossroads to go back to";
 
     public static displayError(element: HTMLElement, message: string, millis: number = 0) {
         element.classList.add("is-danger");
