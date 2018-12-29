@@ -81,6 +81,13 @@ svg{
 .dialogue-management-div{
     border-bottom: 1px solid #AAA;
     padding: 40px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dialogue-management-div > div{
+    flex-grow: 1;
 }
 
 .field {
