@@ -14,7 +14,7 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private dialogueInfo: DialogueInfo;
 
-    private dialogueInfoWrapper: HTMLDivElement;
+    private dialogueContent: HTMLDivElement;
 
     private subdialoguesElement: HTMLSpanElement;
 
@@ -22,20 +22,29 @@ export class DialogueDocumentElement extends DialogueElement {
 
     private subdialoguesVisible = false;
 
+    private idElement: HTMLSpanElement;
+
     constructor(dialogueItem: DialogueItem) {
         super();
 
         this.dialogueItem = dialogueItem;
         this.dialogueInfo = new SlimDialogueInfo(dialogueItem);
         let actionsElement = this.buildActionsDiv(dialogueItem);
-        this.dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
-        this.dialogueInfoWrapper.appendChild(this.dialogueInfo.getDocumentElement());
-        this.dialogueInfoWrapper.appendChild(actionsElement);
+        this.idElement = this.buildElement(["subdialogue-id", "hidden"], "div");
+        this.idElement.innerText = dialogueItem.getId();
+
+        let dialogueInfoWrapper = this.buildDiv(["dialogue-info-wrapper"]);
+        dialogueInfoWrapper.appendChild(this.dialogueInfo.getDocumentElement());
+        dialogueInfoWrapper.appendChild(actionsElement);
+
+        this.dialogueContent = this.buildDiv(["dialogue-content"]);
+        this.dialogueContent.appendChild(this.idElement);
+        this.dialogueContent.appendChild(dialogueInfoWrapper);
 
         this.subdialoguesElement = this.buildDiv(["subdialogues"]);
 
         this.documentElement = this.buildDiv(["dialogue-item"]);
-        this.documentElement.appendChild(this.dialogueInfoWrapper);
+        this.documentElement.appendChild(this.dialogueContent);
         this.documentElement.appendChild(this.subdialoguesElement);
     }
 
@@ -111,17 +120,19 @@ export class DialogueDocumentElement extends DialogueElement {
         return this.dialogueInfo;
     }
 
-    public getDialogueInfoWrapper(): HTMLDivElement {
-        return this.dialogueInfoWrapper;
+    public getDialogueContent(): HTMLDivElement {
+        return this.dialogueContent;
     }
 
     public showSlimView() {
         let newDialogueInfo = new SlimDialogueInfo(this.dialogueItem);
+        this.idElement.classList.add("hidden");
         this.replaceDialogueInfo(newDialogueInfo);
     }
 
     public showEditView() {
         let newDialogueInfo = new EditDialogueInfo(this.dialogueItem);
+        this.idElement.classList.remove("hidden");
         this.replaceDialogueInfo(newDialogueInfo);
     }
 
@@ -135,6 +146,10 @@ export class DialogueDocumentElement extends DialogueElement {
 
     public getDialogueItem(): DialogueItem {
         return this.dialogueItem;
+    }
+
+    public getIdElement() {
+        return this.idElement;
     }
 
 }

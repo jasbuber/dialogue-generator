@@ -119,7 +119,7 @@ export class DialogueTreeBuilder {
         }
 
         this.dialogueTree.addEventListener('mousedown', (e) => {
-            if (e.button == 0 && isInTree) {
+            if (e.button == 0 && isInTree && e.srcElement.closest(".dialogue-content") == null) {
                 window.getSelection().removeAllRanges();
                 isScrolling = true;
                 mousePositionX = e.clientX;

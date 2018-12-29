@@ -33,11 +33,9 @@ body>div {
 }
 
 .item-actions{
-    position: absolute;
-    top: 25%;
-    right: 5px;
-    vertical-align: top;
+    display: inline-block;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 .file-loader-wrapper {
@@ -96,23 +94,17 @@ svg{
     margin-right: 20px;
 }
 
-.npc-dialogue {
-    margin-left: 160px;
-    display: inline-block;
-}
-
 .npc-dialogue .show-delete-modal{ 
     margin-top: 15px;
 }
 
 .help.bottom-error{
     position: absolute;
-    bottom: 0px;
+    bottom: -20px;
     left : 20px;
 }
 .dialogue-tree-controls{
     margin-top: 15px;
-    margin-bottom: 30px;
 }
 
 .dialogue-tree-controls .field{
@@ -148,9 +140,26 @@ svg{
     align-items: center;
     justify-content: left;
     flex-direction: row;
+    margin-top: 40px;
+}
+
+.dialogue-item:first-child{
+    margin-top: 0;
+}
+
+.dialogue-item .subdialogue-id{
+    text-align: center;
+    color: #AAA;
+    cursor: default;
+    user-select: all;
 }
 
 .dialogue-item .dialogue-info-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.dialogue-item .dialogue-content{
     position: relative;
 }
 
@@ -164,7 +173,7 @@ svg{
     border-radius: 10px;
     width: 260px;
     padding: 7px;
-    margin: 25px;
+    margin: 0 5px 0px 25px;
     text-align: center;
     cursor: pointer;
 }
@@ -235,13 +244,10 @@ svg{
 .dialogue-tree{
     position: relative;
     overflow-x: auto;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     cursor: grab;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .icon-lock{

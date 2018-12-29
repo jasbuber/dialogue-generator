@@ -159,6 +159,7 @@ export class DialogueManager {
 
     public addIdChangedListener() {
         this.npcIdInput.addEventListener("change", (e) => {
+            let oldId = this.selectedDialogue.getId();
             let updatedId = (<HTMLInputElement>e.target).value;
 
             if (!this.validateId(updatedId)) {
@@ -166,6 +167,8 @@ export class DialogueManager {
             }
             this.npcSelectElement.updateSelectedOption(updatedId);
             this.selectedDialogue.setId(updatedId);
+            this.selectedDialogue.getSubdialogues().forEach(s => this.updateSubdialogueId(s, oldId, updatedId));
+            this.dialogueSelectElement.updateParentId(oldId, updatedId);
             ErrorDisplayManager.clearErrors(this.npcIdInput);
         }, false);
     }
@@ -187,6 +190,12 @@ export class DialogueManager {
             return false;
         }
         return true;
+    }
+
+    private updateSubdialogueId(dialogueItem: DialogueItem, oldId: string, updatedId: string) {
+        dialogueItem.setId(dialogueItem.getId().replace(oldId, updatedId));
+        dialogueItem.getDocumentItem().getIdElement().innerText = dialogueItem.getId();
+        dialogueItem.getSubdialogues().forEach(s => this.updateSubdialogueId(s, oldId, updatedId));
     }
 
     public addToggleValidationErrorsListener() {

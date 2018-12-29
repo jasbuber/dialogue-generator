@@ -55,7 +55,7 @@ export class TreeEventManager {
         createElement.addEventListener("click", (e) => {
 
             if (item.isFinal()) {
-                let dialogue = item.getDocumentItem().getDialogueInfoWrapper();
+                let dialogue = item.getDocumentItem().getDialogueContent();
                 ErrorDisplayManager.displayInnerError(dialogue, ErrorDisplayManager.FINAL_ITEM_ERROR, 4000);
                 return;
             }
@@ -194,7 +194,7 @@ export class TreeEventManager {
                     this.removeAction(dialogueElement, action);
                 } else {
                     if (dialogueElement.getDialogueItem().getSubdialogues().length != 0 && editDialogueInfo.isActionFinal(action)) {
-                        let dialogue = dialogueElement.getDialogueInfoWrapper();
+                        let dialogue = dialogueElement.getDialogueContent();
                         ErrorDisplayManager.displayInnerError(dialogue, ErrorDisplayManager.ITEM_HAS_CHILDREN_ERROR, 4000);
                         return;
                     }

@@ -68,4 +68,12 @@ export class DialogueItemSelect {
         this.selectElement.selectedIndex = 0;
     }
 
+    public updateParentId(oldParentId: string, newParentId: string) {
+        for (let i: number = 0; i < this.selectElement.options.length; i++) {
+            let option = this.selectElement.options[i];
+            let newId = option.value.replace(oldParentId, newParentId);
+            this.selectElement.options[i].value = newId;
+        }
+    }
+
 }

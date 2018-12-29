@@ -36,7 +36,7 @@ export class ConnectionManager {
         if (parent.classList.contains("hidden") || closestHiddenSubdialogues != null) {
             return;
         }
-        let dialogueInfoWrapper = dialogueItem.getDocumentItem().getDialogueInfoWrapper();
+        let dialogueInfoWrapper = dialogueItem.getDocumentItem().getDialogueContent();
         let dialogueInfoRect = dialogueInfoWrapper.getBoundingClientRect();
 
         this.initialize();
@@ -46,7 +46,7 @@ export class ConnectionManager {
         let lines = new Array<SVGLineElement>();
 
         if (dialogueItem.getSubdialogues().length > 0) {
-            let line = this.drawLine(x, y, x + 25, y);
+            let line = this.drawLine(x + 4, y, x + 30, y);
             lines.push(line);
             this.drawSubdialogueLines(dialogueItem).forEach(l => lines.push(l));
         }
@@ -90,13 +90,13 @@ export class ConnectionManager {
         let commonX = 0;
 
         subdialoguElements.forEach(sub => {
-            let dialogueInfoWrapper = sub.getDocumentItem().getDialogueInfoWrapper();
+            let dialogueInfoWrapper = sub.getDocumentItem().getDocumentElement().querySelector("div");
             let dialogueInfoRect = dialogueInfoWrapper.getBoundingClientRect();
 
-            let x = dialogueInfoWrapper.offsetLeft;
+            let x = dialogueInfoWrapper.offsetLeft + 5;
             let y = dialogueInfoWrapper.offsetTop + dialogueInfoRect.height / 2;
 
-            let line = this.drawLine(x, y, x + 25, y);
+            let line = this.drawLine(x, y, x + 20, y);
 
             lines.push(line);
 
